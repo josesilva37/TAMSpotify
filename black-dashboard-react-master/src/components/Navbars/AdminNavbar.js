@@ -15,10 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useEffect, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-
+import { Redirect } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -39,10 +39,42 @@ import {
   ModalHeader
 } from "reactstrap";
 
+
 function AdminNavbar(props) {
+  const [isAuthenticated, setIsAuthencticated] = useState(false)
+  const [token, setToken] = useState()
+
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+  useEffect(() => {
+    const hashParams = {};
+    const r = /([^&;=]+)=?([^&;]*)/g;
+    const q = window.location.hash.substring(1);
+    let e = r.exec(q);
+    while (e) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+      e = r.exec(q);
+    }
+    setToken(hashParams.access_token)
+    const access_token = hashParams.access_token
+    const state = hashParams.state;
+    const storedState = localStorage.getItem('stateKey');
+    localStorage.setItem('spotifyAuthToken', access_token);
+    localStorage.getItem('spotifyAuthToken');
+
+    if (window.localStorage.getItem('authToken')) {
+      this.setState({ isAuthenticatedWithSpotify: true });
+    }
+    // if (access_token && (state == null || state !== storedState)) {
+    //   alert('Click "ok" to finish authentication with Spotify');
+    // } else {
+    //   localStorage.removeItem('stateKey');
+    // }
+    setIsAuthencticated(true)
+    console.log(access_token);
+  }, [isAuthenticated])
+
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -50,6 +82,24 @@ function AdminNavbar(props) {
       window.removeEventListener("resize", updateColor);
     };
   });
+
+  const spotifyAuth = () => {
+    setIsAuthencticated(true)
+    var scope = 'user-read-private user-read-email';
+    let url =
+      'https://accounts.spotify.com/authorize' +
+      '?response_type=token' +
+      '&client_id=d715a0d69e884da2bf8893a5948d74c6' +
+      '&scope=' +
+      encodeURIComponent(scope) +
+      '&redirect_uri=' +
+      encodeURIComponent('http://localhost:3000/admin/dashboard');
+    window.location = url;
+
+  }
+  const goToProfile = () => {
+    console.log(isAuthenticated)
+  }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
@@ -98,7 +148,7 @@ function AdminNavbar(props) {
           </NavbarToggler>
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
-             
+
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
@@ -112,18 +162,33 @@ function AdminNavbar(props) {
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <p className="d-lg-none">Log out</p>
                 </DropdownToggle>
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
-                  </NavLink>
-                  <DropdownItem divider tag="li" />
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
-                  </NavLink>
-                </DropdownMenu>
+                {!isAuthenticated ?
+                  <DropdownMenu className="dropdown-navbar" right tag="ul">
+                    {/* <NavLink tag="li">
+                  <DropdownItem className="nav-item">Profile</DropdownItem>
+                </NavLink>
+                <NavLink tag="li">
+                  <DropdownItem className="nav-item">Settings</DropdownItem>
+                </NavLink>
+                <DropdownItem divider tag="li" /> */}
+                    <NavLink tag="li">
+                      <DropdownItem className="nav-item" onClick={spotifyAuth}>Log In</DropdownItem>
+                    </NavLink>
+                  </DropdownMenu> :
+                  <DropdownMenu className="dropdown-navbar" right tag="ul">
+                    {/* <NavLink tag="li">
+                <DropdownItem className="nav-item">Profile</DropdownItem>
+              </NavLink>
+              <NavLink tag="li">
+                <DropdownItem className="nav-item">Settings</DropdownItem>
+              </NavLink>
+              <DropdownItem divider tag="li" /> */}
+                    <NavLink tag="li">
+
+                      <DropdownItem className="nav-item">Profile <Redirect to="/admin/user-profile" /></DropdownItem>
+                    </NavLink>
+                  </DropdownMenu>}
+
               </UncontrolledDropdown>
               <li className="separator d-lg-none" />
             </Nav>

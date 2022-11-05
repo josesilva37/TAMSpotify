@@ -5,23 +5,13 @@ const app = express(),
 
 // place holder for the data
 const users = [];
+var auth = require('./auth/auth')
+const redirectUri = 'http://localhost:8888/callback';
 
 app.use(bodyParser.json());
 
-// app.get('/api/users', (req, res) => {
-//   console.log('api/users called!!!!')
-//   res.json(users);
-// });
-
-// app.post('/api/user', (req, res) => {
-//   const user = req.body.user;
-//   console.log('Adding user::::::::', user);
-//   users.push(user);
-//   res.json("user addedd");
-// });
-
-app.get('/', (req,res) => {
-    res.send('App Works !!!!');
+app.get('/auth', (req,res) => {
+    res.send(auth.authRequest());
 });
 
 app.listen(port, () => {
