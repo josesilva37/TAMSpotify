@@ -19,6 +19,7 @@ import SpotifyAuth from "views/auth";
 import Dashboard from "views/Dashboard.js";
 import TableList from "views/TableList.js";
 import UserProfile from "views/UserProfile.js";
+import Albuns from "views/Albuns";
 
 var routes = [
   {
@@ -26,6 +27,13 @@ var routes = [
     name: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/albuns",
+    name: "Álbuns",
+    icon: "tim-icons icon-book-bookmark",
+    component: Albuns,
     layout: "/admin"
   },
   {
