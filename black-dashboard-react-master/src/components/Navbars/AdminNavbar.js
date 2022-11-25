@@ -47,6 +47,7 @@ function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+
   useEffect(() => {
     const hashParams = {};
     const r = /([^&;=]+)=?([^&;]*)/g;
@@ -66,13 +67,17 @@ function AdminNavbar(props) {
     if (window.localStorage.getItem('authToken')) {
       this.setState({ isAuthenticatedWithSpotify: true });
     }
+    if(access_token !== null && access_token !== undefined){
+      setIsAuthencticated(true)
+    }
     // if (access_token && (state == null || state !== storedState)) {
     //   alert('Click "ok" to finish authentication with Spotify');
     // } else {
     //   localStorage.removeItem('stateKey');
     // }
-    setIsAuthencticated(true)
+    // setIsAuthencticated(true)
     console.log(access_token);
+    console.log(isAuthenticated)
   }, [isAuthenticated])
 
   React.useEffect(() => {
@@ -164,28 +169,13 @@ function AdminNavbar(props) {
                 </DropdownToggle>
                 {!isAuthenticated ?
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
-                    {/* <NavLink tag="li">
-                  <DropdownItem className="nav-item">Profile</DropdownItem>
-                </NavLink>
-                <NavLink tag="li">
-                  <DropdownItem className="nav-item">Settings</DropdownItem>
-                </NavLink>
-                <DropdownItem divider tag="li" /> */}
                     <NavLink tag="li">
                       <DropdownItem className="nav-item" onClick={spotifyAuth}>Log In</DropdownItem>
                     </NavLink>
                   </DropdownMenu> :
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
-                    {/* <NavLink tag="li">
-                <DropdownItem className="nav-item">Profile</DropdownItem>
-              </NavLink>
-              <NavLink tag="li">
-                <DropdownItem className="nav-item">Settings</DropdownItem>
-              </NavLink>
-              <DropdownItem divider tag="li" /> */}
                     <NavLink tag="li">
-
-                      <DropdownItem className="nav-item">Profile <Redirect to="/admin/user-profile" /></DropdownItem>
+                      <DropdownItem className="nav-item">Profile</DropdownItem>
                     </NavLink>
                   </DropdownMenu>}
 
