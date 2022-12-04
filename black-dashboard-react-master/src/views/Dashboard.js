@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
@@ -29,17 +29,72 @@ import {
 import TrackTable from "components/TrackTable/TrackTable";
 import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
 import { getUserPlaylists } from "SpotifyAPI/Endpoints";
+import { getUserTopTracks } from "SpotifyAPI/Endpoints";
 
 function Dashboard(props) {
   const [bigChartData, setbigChartData] = React.useState("data1");
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+  const valoresPie = useRef();
+  const [loaded, setLoaded] = useState(false);
+  const [tracks, setTracks] = useState([]);
 
-  useEffect(async() => {
-    const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
-    console.log("response: ", resp);
+  /////// PIE CHART DATA //////////
+  useEffect(() => {
+
+    function randomColor () {
+      var x=Math.round(0xffffff * Math.random()).toString(16);
+      var y=(6-x.length);
+      var z='000000';
+      var z1 = z.substring(0,y);
+      var color= '#' + z1 + x;
+
+      return color;
+    }
+
+    async function UsersPlaylist() {
+      const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
+      let data = [];
+      resp.items.map((p) => {
+        data.push({title: p.name , value: p.tracks.total, color: randomColor()});
+      })
+      return data;
+    }
+
+    const finished = (resp) => {
+      console.log(resp)
+      valoresPie.current = resp;
+      setLoaded(true);
+
+    }
+    
+    UsersPlaylist().then(res => finished(res));
+
   }, [])
+
+
+
+  //////////// SONGS DATA ////////////
+
+  useEffect(() => {
+    async function UsersTopTracks() {
+      const data = await getUserTopTracks(window.localStorage.getItem('spotifyAuthToken'));
+      console.log(data)
+      setTracks(data.items)
+    }
+
+    UsersTopTracks();
+  }, [])
+
+
+  function PieClicked (index) {
+    valoresPie.current.map((p, i) => {
+      if(i===index){
+        console.log(p);
+      }
+    })
+  }
 
 
   function millisToMinutesAndSeconds(millis) {
@@ -47,12 +102,6 @@ function Dashboard(props) {
     var seconds = ((millis % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
-
-  const valores = [
-    { title: 'One', value: 10, color: '#E38627' },
-    { title: 'Two', value: 15, color: '#C13C37' },
-    { title: 'Three', value: 20, color: '#6A2135' },
-  ]
 
   return (
     <>
@@ -63,18 +112,13 @@ function Dashboard(props) {
               <CardHeader>
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
-              <PieChart data={valores}
+              <PieChart data={valoresPie.current}
               style={{height: '300px', padding: '25px 0px'}}
-              label={({ dataEntry }) => dataEntry.value}
               rounded
               lineWidth={20}
               paddingAngle={18}
               animate
-              labelStyle={(index) => ({
-                fill: valores[index].color,
-                fontSize: '8px',
-                fontFamily: 'sans-serif',
-              })}
+              onClick={(e, segmentIndex) => PieClicked(segmentIndex)}
               ></PieChart>
             </Card>
           </Col>
@@ -119,36 +163,18 @@ function Dashboard(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
+                    {tracks.map((t, i) => {
+                      if(i < 5){
+                        return(
+                          <tr>
+                            <td>{i + 1}</td>
+                            <td><TrackTable trackName={t.name} artist={t.artists[0].name} image={t.album.images[2].url}></TrackTable></td>
+                            <td>{t.album.name}</td>
+                            <td className="text-center">{millisToMinutesAndSeconds(t.duration_ms)}</td>
+                          </tr>
+                        )
+                      }
+                    })}
                   </tbody>
                 </Table>
               </CardBody>
