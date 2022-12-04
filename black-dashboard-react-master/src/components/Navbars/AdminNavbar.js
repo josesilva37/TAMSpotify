@@ -91,7 +91,7 @@ function AdminNavbar(props) {
 
   const spotifyAuth = () => {
     setIsAuthencticated(true)
-    var scope = 'user-read-private user-read-email';
+    var scope = 'user-read-private user-read-email user-read-playback-position user-top-read user-read-recently-played playlist-read-private playlist-read-collaborative';
     let url =
       'https://accounts.spotify.com/authorize' +
       '?response_type=token' +
@@ -103,9 +103,9 @@ function AdminNavbar(props) {
     window.location = url;
 
   }
-  const goToProfile = () => {
-    console.log(window.localStorage.getItem('spotifyAuthToken'))
-    console.log(getUser(window.localStorage.getItem('spotifyAuthToken')))
+  const goToProfile = async () => {
+    let user = await getUser(window.localStorage.getItem('spotifyAuthToken'))
+    console.log(user)
   }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {

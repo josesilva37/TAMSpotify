@@ -8,10 +8,13 @@ export async function getUser(token) {
         redirect: 'follow'
     };
 
-    fetch("https://api.spotify.com/v1/me", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+   return fetch("https://api.spotify.com/v1/me", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
+
 }
 
 export async function getUserPlaylists(token) {
@@ -24,16 +27,46 @@ export async function getUserPlaylists(token) {
         redirect: 'follow'
     };
 
-    fetch("https://api.spotify.com/v1/me/playlists", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+    return fetch("https://api.spotify.com/v1/me/playlists", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
 }
 
-export async function getUserTopTracks(token){
+export async function getUserTopTracks(token) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
 
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch("https://api.spotify.com/v1/me/top/tracks", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));    
 }
 
-export async function getUserTopArtists(token){
-    
+export async function getUserTopArtists(token) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch("https://api.spotify.com/v1/me/top/artists", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
 }
