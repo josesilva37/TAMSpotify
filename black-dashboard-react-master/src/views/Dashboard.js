@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
@@ -8,19 +8,10 @@ import { PieChart } from "react-minimal-pie-chart";
 
 // reactstrap components
 import {
-  Button,
-  ButtonGroup,
   Card,
   CardHeader,
   CardBody,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
   Table,
   Row,
   Col,
@@ -37,12 +28,18 @@ import {
 } from "variables/charts.js";
 import TrackTable from "components/TrackTable/TrackTable";
 import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
+import { getUserPlaylists } from "SpotifyAPI/Endpoints";
 
 function Dashboard(props) {
   const [bigChartData, setbigChartData] = React.useState("data1");
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+
+  useEffect(async() => {
+    const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
+    console.log("response: ", resp);
+  }, [])
 
 
   function millisToMinutesAndSeconds(millis) {
@@ -67,17 +64,17 @@ function Dashboard(props) {
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
               <PieChart data={valores}
-              style={{height: '200px', padding: '25px 0px'}}
+              style={{height: '300px', padding: '25px 0px'}}
               label={({ dataEntry }) => dataEntry.value}
               rounded
               lineWidth={20}
               paddingAngle={18}
+              animate
               labelStyle={(index) => ({
                 fill: valores[index].color,
-                fontSize: '10px',
+                fontSize: '8px',
                 fontFamily: 'sans-serif',
               })}
-              labelPosition={60}
               ></PieChart>
             </Card>
           </Col>
