@@ -3,7 +3,8 @@ import React from "react";
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
-import PieChart from 'react-pie-graph-chart';
+// import PieChart from 'react-pie-graph-chart';
+import { PieChart } from "react-minimal-pie-chart";
 
 // reactstrap components
 import {
@@ -50,6 +51,12 @@ function Dashboard(props) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
+  const valores = [
+    { title: 'One', value: 10, color: '#E38627' },
+    { title: 'Two', value: 15, color: '#C13C37' },
+    { title: 'Three', value: 20, color: '#6A2135' },
+  ]
+
   return (
     <>
       <div className="content">
@@ -59,38 +66,25 @@ function Dashboard(props) {
               <CardHeader>
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
-              <PieChart data={[
-                {
-                  type: "Bus",
-                  value: 235,
-                  color: "#E97D30"
-                },
-                {
-                  type: "Bicycle",
-                  value: 165,
-                  color: "#62B170"
-                },
-                {
-                  type: "Train",
-                  value: 90,
-                  color: "#F1AF13"
-                },
-                {
-                  type: "Car",
-                  value: 345,
-                  color: "#4BA2DA"
-                }
-              ]} />
+              <PieChart data={valores}
+              style={{height: '200px', padding: '25px 0px'}}
+              label={({ dataEntry }) => dataEntry.value}
+              rounded
+              lineWidth={20}
+              paddingAngle={18}
+              labelStyle={(index) => ({
+                fill: valores[index].color,
+                fontSize: '10px',
+                fontFamily: 'sans-serif',
+              })}
+              labelPosition={60}
+              ></PieChart>
             </Card>
           </Col>
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Top Genres</h5>
-                {/* <CardTitle tag="h3">
-                  <i className="tim-icons icon-delivery-fast text-primary" />{" "}
-                  3,500€
-                </CardTitle> */}
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
