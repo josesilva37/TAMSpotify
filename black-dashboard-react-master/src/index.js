@@ -38,6 +38,7 @@ root.render(
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Redirect from="/" to="/admin/dashboard" />
+          <Redirect from="/admin/calback" to="/admin/dashboard" />
         </Switch>
       </BrowserRouter>
     </BackgroundColorWrapper>
