@@ -6,7 +6,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    box-shadow: 5px 10px 18px #888888;
+    box-shadow: 5px 10px 18px rgb(24, 24, 24);
 }
 
 .album-image{
@@ -14,12 +14,12 @@
 }
 
 .album-image img{
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
 }
 
 .album-info{
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .album-name{
@@ -30,16 +30,81 @@
 
 .album-artist-name{
     color: gray;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .album-see-details{
-    background-color: darkcyan;
+    background: #115173;
     border: none;
     color: white;
     text-align: center;
     border-radius: 15px;
     margin: auto;
-    margin-top: 20px;
+    font-weight: 600;
+    margin-top: 10px;
     padding: 5px 25px;
+}
+
+
+.track-table-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.track-image img {
+    height: 50px;
+    width: 50px;
+}
+
+
+.track-info{
+    margin-left: 10px;
+}
+
+.track-name{
+    font-weight: bold;
+    color: #fff !important;
+    margin-bottom: 2px;
+}
+
+.track-artist {
+    font-size: smaller;
+}
+
+.featured-artist-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.artist-image img{
+    border-radius: 50%;
+}
+
+.artist-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.artist-principal{
+    display: flex;
+    flex-direction: row;
+}
+
+.artist-principal p {
+    color: #fff !important;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.artist-followers{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
