@@ -38,6 +38,7 @@ import {
   NavbarToggler,
   ModalHeader
 } from "reactstrap";
+import { getUser } from "../../SpotifyAPI/Endpoints";
 
 
 function AdminNavbar(props) {
@@ -64,9 +65,9 @@ function AdminNavbar(props) {
     localStorage.setItem('spotifyAuthToken', access_token);
     localStorage.getItem('spotifyAuthToken');
 
-    if (window.localStorage.getItem('authToken')) {
-      this.setState({ isAuthenticatedWithSpotify: true });
-    }
+    // if (window.localStorage.getItem('spotifyAuthToken')) {
+    //   this.setState({ isAuthenticatedWithSpotify: true });
+    // }
     if(access_token !== null && access_token !== undefined){
       setIsAuthencticated(true)
     }
@@ -103,7 +104,8 @@ function AdminNavbar(props) {
 
   }
   const goToProfile = () => {
-    console.log(isAuthenticated)
+    console.log(window.localStorage.getItem('spotifyAuthToken'))
+    console.log(getUser(window.localStorage.getItem('spotifyAuthToken')))
   }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
@@ -175,7 +177,7 @@ function AdminNavbar(props) {
                   </DropdownMenu> :
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Profile</DropdownItem>
+                      <DropdownItem className="nav-item" onClick={goToProfile}>Profile</DropdownItem>
                     </NavLink>
                   </DropdownMenu>}
 
