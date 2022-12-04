@@ -1,25 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
-import PieChart from 'react-pie-graph-chart';
+// import PieChart from 'react-pie-graph-chart';
+import { PieChart } from "react-minimal-pie-chart";
 
 // reactstrap components
 import {
-  Button,
-  ButtonGroup,
   Card,
   CardHeader,
   CardBody,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
   Table,
   Row,
   Col,
@@ -36,12 +28,73 @@ import {
 } from "variables/charts.js";
 import TrackTable from "components/TrackTable/TrackTable";
 import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
+import { getUserPlaylists } from "SpotifyAPI/Endpoints";
+import { getUserTopTracks } from "SpotifyAPI/Endpoints";
 
 function Dashboard(props) {
   const [bigChartData, setbigChartData] = React.useState("data1");
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+  const valoresPie = useRef();
+  const [loaded, setLoaded] = useState(false);
+  const [tracks, setTracks] = useState([]);
+
+  /////// PIE CHART DATA //////////
+  useEffect(() => {
+
+    function randomColor () {
+      var x=Math.round(0xffffff * Math.random()).toString(16);
+      var y=(6-x.length);
+      var z='000000';
+      var z1 = z.substring(0,y);
+      var color= '#' + z1 + x;
+
+      return color;
+    }
+
+    async function UsersPlaylist() {
+      const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
+      let data = [];
+      resp.items.map((p) => {
+        data.push({title: p.name , value: p.tracks.total, color: randomColor()});
+      })
+      return data;
+    }
+
+    const finished = (resp) => {
+      console.log(resp)
+      valoresPie.current = resp;
+      setLoaded(true);
+
+    }
+    
+    UsersPlaylist().then(res => finished(res));
+
+  }, [])
+
+
+
+  //////////// SONGS DATA ////////////
+
+  useEffect(() => {
+    async function UsersTopTracks() {
+      const data = await getUserTopTracks(window.localStorage.getItem('spotifyAuthToken'));
+      console.log(data)
+      setTracks(data.items)
+    }
+
+    UsersTopTracks();
+  }, [])
+
+
+  function PieClicked (index) {
+    valoresPie.current.map((p, i) => {
+      if(i===index){
+        console.log(p);
+      }
+    })
+  }
 
 
   function millisToMinutesAndSeconds(millis) {
@@ -59,38 +112,20 @@ function Dashboard(props) {
               <CardHeader>
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
-              <PieChart data={[
-                {
-                  type: "Bus",
-                  value: 235,
-                  color: "#E97D30"
-                },
-                {
-                  type: "Bicycle",
-                  value: 165,
-                  color: "#62B170"
-                },
-                {
-                  type: "Train",
-                  value: 90,
-                  color: "#F1AF13"
-                },
-                {
-                  type: "Car",
-                  value: 345,
-                  color: "#4BA2DA"
-                }
-              ]} />
+              <PieChart data={valoresPie.current}
+              style={{height: '300px', padding: '25px 0px'}}
+              rounded
+              lineWidth={20}
+              paddingAngle={18}
+              animate
+              onClick={(e, segmentIndex) => PieClicked(segmentIndex)}
+              ></PieChart>
             </Card>
           </Col>
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Top Genres</h5>
-                {/* <CardTitle tag="h3">
-                  <i className="tim-icons icon-delivery-fast text-primary" />{" "}
-                  3,500€
-                </CardTitle> */}
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -128,36 +163,18 @@ function Dashboard(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td><TrackTable></TrackTable></td>
-                      <td>Cut To The Feeling</td>
-                      <td className="text-center">{millisToMinutesAndSeconds(207959)}</td>
-                    </tr>
+                    {tracks.map((t, i) => {
+                      if(i < 5){
+                        return(
+                          <tr>
+                            <td>{i + 1}</td>
+                            <td><TrackTable trackName={t.name} artist={t.artists[0].name} image={t.album.images[2].url}></TrackTable></td>
+                            <td>{t.album.name}</td>
+                            <td className="text-center">{millisToMinutesAndSeconds(t.duration_ms)}</td>
+                          </tr>
+                        )
+                      }
+                    })}
                   </tbody>
                 </Table>
               </CardBody>

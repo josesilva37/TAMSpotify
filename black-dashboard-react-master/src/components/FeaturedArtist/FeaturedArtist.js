@@ -13,7 +13,10 @@ export default function FeaturedArtist(props) {
                 <p className="artist-popularity"># 94</p>
                 <p className="artist-name">Drake</p>
             </div>
-            <p className="artist-followers"><i><img style={{height: '18px'}} src={require("assets/img/icons8-following-32.png")}/></i>68229137</p>
+            <div className="artist-followers">
+              <img src={require("assets/img/icons8-following-32.png")}/>
+              <p>68229137</p>
+            </div>
             <p className="artist-genres">canadian hip hop, canadian pop, hip hop, rap, toronto rap</p>
         </div>
     </div>
