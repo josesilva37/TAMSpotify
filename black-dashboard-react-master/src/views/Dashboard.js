@@ -33,16 +33,21 @@ import { getUserTopTracks } from "SpotifyAPI/Endpoints";
 import { getUserTopArtists } from "SpotifyAPI/Endpoints";
 
 function Dashboard(props) {
-  const [bigChartData, setbigChartData] = React.useState("data1");
-  const setBgChartData = (name) => {
-    setbigChartData(name);
-  };
   const valoresPie = useRef();
   const [loaded, setLoaded] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [artists, setArtists] = useState()
   const [labels, setLabels] = useState([])
   const [pop, setPop] = useState([])
+  const userToken = useRef(undefined);
+
+
+  /////////////// USER TOKEN ////////////
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('spotifyAuthToken');
+    userToken.current = token;
+  }, [])
 
   /////// PIE CHART DATA //////////
   useEffect(() => {
@@ -58,7 +63,7 @@ function Dashboard(props) {
     }
 
     async function UsersPlaylist() {
-      const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
+      const resp = await getUserPlaylists(userToken.current)
       let data = [];
       resp.items.map((p) => {
         data.push({ title: p.name, value: p.tracks.total, color: randomColor() });
@@ -67,15 +72,16 @@ function Dashboard(props) {
     }
 
     const finished = (resp) => {
-      console.log(resp)
       valoresPie.current = resp;
       setLoaded(true);
 
     }
+    
+    if(userToken.current !== 'undefined'){
+      UsersPlaylist().then(res => finished(res));
+    }
 
-    UsersPlaylist().then(res => finished(res));
-
-  }, [])
+  }, [userToken])
 
 
 
@@ -83,8 +89,7 @@ function Dashboard(props) {
 
   useEffect(() => {
     async function UsersTopTracks() {
-      const data = await getUserTopTracks(window.localStorage.getItem('spotifyAuthToken'));
-      console.log(data)
+      const data = await getUserTopTracks(userToken.current, 1);
       setTracks(data.items)
     }
     async function UserTopArtists() {
@@ -101,9 +106,16 @@ function Dashboard(props) {
       }
       setArtists(data)
     }
-    UserTopArtists();
-    UsersTopTracks();
-  }, [])
+    
+    if(userToken.current !== 'undefined'){
+      UserTopArtists();
+      UsersTopTracks();
+    }
+
+  }, [userToken])
+
+
+
 
   const options = {
     hover: {
@@ -157,6 +169,19 @@ function Dashboard(props) {
   }
 
 
+  function HandleTracks (value) {
+    async function UsersTopTracks() {
+      const data = await getUserTopTracks(userToken.current, value.target.value);
+      console.log(data);
+      setTracks(data.items)
+    }
+
+    if(userToken.current !== 'undefined'){
+      UsersTopTracks();
+    }
+  }
+
+
   function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
     var seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -197,6 +222,11 @@ function Dashboard(props) {
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">Top 5 Daily Tracks</CardTitle>
+                <select onChange={HandleTracks}>
+                  <option value={1}>4 weeks</option>
+                  <option value={2}>6 moths</option>
+                  <option value={3}>All time</option>
+                </select>
               </CardHeader>
               <CardBody>
                 <Table className="tablesorter" responsive>
