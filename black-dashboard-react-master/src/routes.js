@@ -15,7 +15,6 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import SpotifyAuth from "views/auth";
 import Dashboard from "views/Dashboard.js";
 import TableList from "views/TableList.js";
 import UserProfile from "views/UserProfile.js";
@@ -43,5 +42,12 @@ var routes = [
     component: TableList,
     layout: "/admin"
   },
+  {
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "tim-icons icon-single-02",
+    component: UserProfile,
+    layout: "/admin"
+  }
 ];
 export default routes;

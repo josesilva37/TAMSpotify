@@ -15,7 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
+import { Link } from 'react-router-dom'
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import { Redirect } from "react-router-dom";
@@ -38,7 +39,7 @@ import {
   NavbarToggler,
   ModalHeader
 } from "reactstrap";
-import { getUser } from "../../SpotifyAPI/Endpoints";
+import { getUser, getUserPlaylists } from "../../SpotifyAPI/Endpoints";
 
 
 function AdminNavbar(props) {
@@ -71,14 +72,6 @@ function AdminNavbar(props) {
     if(access_token !== null && access_token !== undefined){
       setIsAuthencticated(true)
     }
-    // if (access_token && (state == null || state !== storedState)) {
-    //   alert('Click "ok" to finish authentication with Spotify');
-    // } else {
-    //   localStorage.removeItem('stateKey');
-    // }
-    // setIsAuthencticated(true)
-    console.log(access_token);
-    console.log(isAuthenticated)
   }, [isAuthenticated])
 
   React.useEffect(() => {
@@ -104,8 +97,9 @@ function AdminNavbar(props) {
 
   }
   const goToProfile = async () => {
-    let user = await getUser(window.localStorage.getItem('spotifyAuthToken'))
-    console.log(user)
+    // let user = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
+    // console.log(user)
+    return <Redirect to="/admin/user-profile"></Redirect>
   }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
@@ -177,7 +171,7 @@ function AdminNavbar(props) {
                   </DropdownMenu> :
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item" onClick={goToProfile}>Profile</DropdownItem>
+                      <DropdownItem className="nav-item"><Link to="/admin/user-profile" style={{color:"black"}}>Profile</Link></DropdownItem>
                     </NavLink>
                   </DropdownMenu>}
 

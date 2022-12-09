@@ -119,7 +119,7 @@ function Sidebar(props) {
               </div>
             ) : null}
             <Nav>
-              {routes.map((prop, key) => {
+              {routes.map((prop, key,size) => {
                 if (prop.redirect) return null;
                 return (
                   <li
