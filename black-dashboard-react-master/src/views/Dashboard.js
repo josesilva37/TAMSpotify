@@ -30,6 +30,7 @@ import TrackTable from "components/TrackTable/TrackTable";
 import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
 import { getUserPlaylists } from "SpotifyAPI/Endpoints";
 import { getUserTopTracks } from "SpotifyAPI/Endpoints";
+import { getUserTopArtists } from "SpotifyAPI/Endpoints";
 
 function Dashboard(props) {
   const [bigChartData, setbigChartData] = React.useState("data1");
@@ -39,16 +40,19 @@ function Dashboard(props) {
   const valoresPie = useRef();
   const [loaded, setLoaded] = useState(false);
   const [tracks, setTracks] = useState([]);
+  const [artists, setArtists] = useState()
+  const [labels, setLabels] = useState([])
+  const [pop, setPop] = useState([])
 
   /////// PIE CHART DATA //////////
   useEffect(() => {
 
-    function randomColor () {
-      var x=Math.round(0xffffff * Math.random()).toString(16);
-      var y=(6-x.length);
-      var z='000000';
-      var z1 = z.substring(0,y);
-      var color= '#' + z1 + x;
+    function randomColor() {
+      var x = Math.round(0xffffff * Math.random()).toString(16);
+      var y = (6 - x.length);
+      var z = '000000';
+      var z1 = z.substring(0, y);
+      var color = '#' + z1 + x;
 
       return color;
     }
@@ -57,7 +61,7 @@ function Dashboard(props) {
       const resp = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
       let data = [];
       resp.items.map((p) => {
-        data.push({title: p.name , value: p.tracks.total, color: randomColor()});
+        data.push({ title: p.name, value: p.tracks.total, color: randomColor() });
       })
       return data;
     }
@@ -68,7 +72,7 @@ function Dashboard(props) {
       setLoaded(true);
 
     }
-    
+
     UsersPlaylist().then(res => finished(res));
 
   }, [])
@@ -83,14 +87,70 @@ function Dashboard(props) {
       console.log(data)
       setTracks(data.items)
     }
-
+    async function UserTopArtists() {
+      const data = await getUserTopArtists(window.localStorage.getItem('spotifyAuthToken'));
+      if (data !== null && data !== undefined) {
+        var arrN = []
+        var arrP = []
+        data.items.map((p, i, array) => {
+          arrN.push(p.name)
+          arrP.push(p.popularity)
+        })
+        setLabels(arrN)
+        setPop(arrP)
+      }
+      setArtists(data)
+    }
+    UserTopArtists();
     UsersTopTracks();
   }, [])
 
+  const options = {
+    hover: {
+      mode: 'label'
+    },
+    scales: {
+      xAxes: [{
+        display: true,
+        scaleLabel: {
+          display: true,
+        }
+      }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          steps: 10,
+          stepValue: 5,
+          max: 100
+        }
+      }]
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Top Artists',
+      },
+    },
+  };
 
-  function PieClicked (index) {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Artists',
+        data: labels.map((p, i) => pop[i]),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+  function PieClicked(index) {
     valoresPie.current.map((p, i) => {
-      if(i===index){
+      if (i === index) {
         console.log(p);
       }
     })
@@ -113,42 +173,28 @@ function Dashboard(props) {
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
               <PieChart data={valoresPie.current}
-              style={{height: '300px', padding: '25px 0px'}}
-              rounded
-              lineWidth={20}
-              paddingAngle={18}
-              animate
-              onClick={(e, segmentIndex) => PieClicked(segmentIndex)}
+                style={{ height: '300px', padding: '25px 0px' }}
+                rounded
+                lineWidth={20}
+                paddingAngle={18}
+                animate
+                onClick={(e, segmentIndex) => PieClicked(segmentIndex)}
               ></PieChart>
             </Card>
           </Col>
-          <Col lg="4">
+          </Row>
+          
+          {/* <Col lg="4">
             <Card className="card-chart">
-              <CardHeader>
-                <h5 className="card-category">Top Genres</h5>
-              </CardHeader>
-              <CardBody>
-                <div className="chart-area">
-                  <Bar
-                    data={chartExample3.data}
-                    options={chartExample3.options}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4">
-            <Card className="card-chart">
-              <CardHeader>
+            <CardHeader>
                 <h5 className="card-category">Featured Artist</h5>
               </CardHeader>
               <FeaturedArtist></FeaturedArtist>
             </Card>
-          </Col>
-        </Row>
+          </Col> */}
         <Row>
           <Col xs="12">
-          <Card>
+            <Card>
               <CardHeader>
                 <CardTitle tag="h4">Top 5 Daily Tracks</CardTitle>
               </CardHeader>
@@ -164,8 +210,8 @@ function Dashboard(props) {
                   </thead>
                   <tbody>
                     {tracks.map((t, i) => {
-                      if(i < 5){
-                        return(
+                      if (i < 5) {
+                        return (
                           <tr>
                             <td>{i + 1}</td>
                             <td><TrackTable trackName={t.name} artist={t.artists[0].name} image={t.album.images[2].url}></TrackTable></td>
@@ -181,6 +227,25 @@ function Dashboard(props) {
             </Card>
           </Col>
         </Row>
+        <Row>
+          <Col lg="8">
+            <Card className="card-chart">
+              <CardHeader>
+                <h5 className="card-category">Top Artist's</h5>
+              </CardHeader>
+              <CardBody>
+                <div className="chart-area" style={{heigth:'100%'}}>
+                  {artists !== undefined &&
+                    <Bar
+                      data={data}
+                      options={options}
+                    />
+                  }
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          </Row>
       </div>
     </>
   );
