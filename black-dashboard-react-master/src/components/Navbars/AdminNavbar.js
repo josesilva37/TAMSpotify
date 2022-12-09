@@ -84,7 +84,7 @@ function AdminNavbar(props) {
 
   const spotifyAuth = () => {
     setIsAuthencticated(true)
-    var scope = 'user-read-private user-read-email user-read-playback-position user-top-read user-read-recently-played playlist-read-private playlist-read-collaborative';
+    var scope = 'user-read-private user-read-email user-read-playback-position user-top-read user-read-recently-played playlist-read-private playlist-read-collaborative user-library-read';
     let url =
       'https://accounts.spotify.com/authorize' +
       '?response_type=token' +

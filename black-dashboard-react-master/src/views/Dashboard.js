@@ -207,6 +207,23 @@ function Dashboard(props) {
               ></PieChart>
             </Card>
           </Col>
+          <Col lg="8">
+            <Card className="card-chart">
+              <CardHeader>
+                <h5 className="card-category">Top Artist's</h5>
+              </CardHeader>
+              <CardBody>
+                <div className="chart-area" style={{height:'100%'}}>
+                  {artists !== undefined &&
+                    <Bar
+                      data={data}
+                      options={options}
+                    />
+                  }
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
           </Row>
           
           {/* <Col lg="4">
@@ -257,25 +274,6 @@ function Dashboard(props) {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col lg="8">
-            <Card className="card-chart">
-              <CardHeader>
-                <h5 className="card-category">Top Artist's</h5>
-              </CardHeader>
-              <CardBody>
-                <div className="chart-area" style={{heigth:'100%'}}>
-                  {artists !== undefined &&
-                    <Bar
-                      data={data}
-                      options={options}
-                    />
-                  }
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          </Row>
       </div>
     </>
   );
