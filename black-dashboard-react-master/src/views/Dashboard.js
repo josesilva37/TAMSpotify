@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { Line, Bar, Pie } from "react-chartjs-2";
 // import PieChart from 'react-pie-graph-chart';
 import { PieChart } from "react-minimal-pie-chart";
-
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 // reactstrap components
 import {
   Card,
@@ -40,7 +40,14 @@ function Dashboard(props) {
   const [labels, setLabels] = useState([])
   const [pop, setPop] = useState([])
   const userToken = useRef(undefined);
-
+  const chartRef = useRef(null) //create reference hook
+  const [tooltip, setTooltip] = useState({
+    opacity: 0,
+    top: 0,
+    left: 0,
+    date: '',
+    value: '',
+  })
 
   /////////////// USER TOKEN ////////////
 
@@ -76,8 +83,8 @@ function Dashboard(props) {
       setLoaded(true);
 
     }
-    
-    if(userToken.current !== 'undefined'){
+
+    if (userToken.current !== 'undefined') {
       UsersPlaylist().then(res => finished(res));
     }
 
@@ -106,8 +113,8 @@ function Dashboard(props) {
       }
       setArtists(data)
     }
-    
-    if(userToken.current !== 'undefined'){
+
+    if (userToken.current !== 'undefined') {
       UserTopArtists();
       UsersTopTracks();
     }
@@ -118,9 +125,6 @@ function Dashboard(props) {
 
 
   const options = {
-    hover: {
-      mode: 'label'
-    },
     scales: {
       xAxes: [{
         display: true,
@@ -140,13 +144,34 @@ function Dashboard(props) {
     },
     responsive: true,
     plugins: {
+      tooltip: {
+        enabled: false,
+        external: function (context){
+          console.log(context)
+          context.tooltip.active = true
+        }
+    },
+      datalabels: {
+        align: 'end',
+        anchor: 'end',
+        backgroundColor: function (context) {
+          return '#0d7377';
+        },
+        borderRadius: 4,
+        color: 'white',
+        formatter: function (value, a) {
+          let val = a.dataIndex + 1
+          return "#" + val
+        }
+      },
       legend: {
         position: 'top',
       },
       title: {
         display: true,
-        text: 'Top Artists',
+        text: 'Top Artists Popularity',
       },
+
     },
   };
 
@@ -154,9 +179,9 @@ function Dashboard(props) {
     labels,
     datasets: [
       {
-        label: 'Artists',
+        label: 'Popularity',
         data: labels.map((p, i) => pop[i]),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: '#00c6d9',
       },
     ],
   };
@@ -169,14 +194,14 @@ function Dashboard(props) {
   }
 
 
-  function HandleTracks (value) {
+  function HandleTracks(value) {
     async function UsersTopTracks() {
       const data = await getUserTopTracks(userToken.current, value.target.value);
       console.log(data);
       setTracks(data.items)
     }
 
-    if(userToken.current !== 'undefined'){
+    if (userToken.current !== 'undefined') {
       UsersTopTracks();
     }
   }
@@ -198,7 +223,7 @@ function Dashboard(props) {
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
               <PieChart data={valoresPie.current}
-                style={{ height: '300px', padding: '25px 0px' }}
+                style={{ height: '100%', padding: '25px 0px' }}
                 rounded
                 lineWidth={20}
                 paddingAngle={18}
@@ -213,9 +238,10 @@ function Dashboard(props) {
                 <h5 className="card-category">Top Artist's</h5>
               </CardHeader>
               <CardBody>
-                <div className="chart-area" style={{height:'100%'}}>
+                <div className="chart-area" style={{ height: '100%' }}>
                   {artists !== undefined &&
                     <Bar
+                      plugins={[ChartDataLabels]}
                       data={data}
                       options={options}
                     />
@@ -224,9 +250,9 @@ function Dashboard(props) {
               </CardBody>
             </Card>
           </Col>
-          </Row>
-          
-          {/* <Col lg="4">
+        </Row>
+
+        {/* <Col lg="4">
             <Card className="card-chart">
             <CardHeader>
                 <h5 className="card-category">Featured Artist</h5>
