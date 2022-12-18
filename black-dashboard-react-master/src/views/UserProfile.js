@@ -88,7 +88,7 @@ function UserProfile() {
                       <div className="button-container">
                         <a href={user.external_urls.spotify}>
                         <Button className="btn-icon btn-round" >
-                          <img src={require("/home/joseuni/Documents/GitHub/TAMSpotify/black-dashboard-react-master/src/assets/img/icons8-spotify-30.png")}></img>
+                        <img src={require("assets/img/icons8-spotify-30.png")}/>
                         </Button>
                         </a>
                       </div>

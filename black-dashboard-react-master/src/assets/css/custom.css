@@ -1,12 +1,21 @@
+.albumWrapper{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-auto-rows: 1fr
+
+}
+
 .album-container{
     background-color: #27293D;
     border-radius: 15px;
-    height: fit-content;
+    /* height: fit-content; */
     width: fit-content;
     padding: 15px;
     display: flex;
     flex-direction: column;
     box-shadow: 5px 10px 18px rgb(24, 24, 24);
+    margin: 10px 10px;
+    flex: 1;
 }
 
 .album-image{
@@ -14,8 +23,7 @@
 }
 
 .album-image img{
-    height: 150px;
-    width: 150px;
+    width: 100%;
 }
 
 .album-info{
@@ -41,7 +49,8 @@
     border-radius: 15px;
     margin: auto;
     font-weight: 600;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 5px;
     padding: 5px 25px;
 }
 
@@ -117,4 +126,43 @@
 
 .artist-followers p {
     margin-bottom: 0;
+}
+
+
+.album-detail-container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.album-detail-info{
+    display: flex;
+    align-items: flex-end;
+}
+
+.album-detail-info .sub-info{
+    padding: 0 0 20px 20px;
+}
+
+.album-detail-info .title{
+    color: #fff;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+
+.album-detail-info .bottom-info{
+    display: flex;
+}
+
+.album-detail-info .bottom-info p {
+    margin: 0 10px 0 0;
+}
+
+.album-detail-info img{
+    width: 300px;
+}
+
+.songs{
+    padding: 15px;
 }

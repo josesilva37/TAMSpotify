@@ -3,16 +3,22 @@ import "assets/css/custom.css"
 
 export default function AlbunsCards(props) {
 
+  function HandleClick () {
+    console.log("entrou", props.id)
+    props.setOpen(true);
+    props.setAlbumId(props.id)
+  }
+
   return (
     <div className="album-container">
         <div className="album-image">
-            <img src={"https://i.scdn.co/image/ab67616d00001e022c5b24ecfa39523a75c993c4"}></img>
+            <img src={props.image}></img>
         </div>
         <div className="album-info">
-            <p className="album-name">Global Warming</p>
-            <p className="album-artist-name">Pitbull</p>
+            <p className="album-name">{props.name}</p>
+            <p className="album-artist-name">{props.artist}</p>
         </div>
-        <button className="album-see-details">See Details</button>
+        <button className="album-see-details" onClick={HandleClick}>See Details</button>
     </div>
   );
 }
