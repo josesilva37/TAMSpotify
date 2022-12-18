@@ -264,7 +264,7 @@ function Dashboard(props) {
           <Col xs="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Top 5 Daily Tracks</CardTitle>
+                <CardTitle tag="h4">Top 5 Tracks</CardTitle>
                 <select onChange={HandleTracks}>
                   <option value={1}>4 weeks</option>
                   <option value={2}>6 moths</option>
