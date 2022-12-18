@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
+import { CardHeader } from "reactstrap";
 import "assets/css/custom.css"
 import AlbunsCards from "components/AlbunsCards/AlbunsCards";
 import AlbumDetail from "components/AlbumDetail/AlbumDetail"
@@ -8,13 +9,19 @@ import { getUserAlbums } from "SpotifyAPI/Endpoints";
 function Albuns() {
   const [albums, setAlbums] = useState([]);
   const userToken = useRef(undefined);
+  const [isLogged, setIsLogged] = useState(false)
   const [isOpen, setOpen] = useState(false);
   const [albumId, setAlbumId] = useState('');
 
+  /////////////// USER TOKEN ////////////
 
   useEffect(() => {
     const token = window.localStorage.getItem('spotifyAuthToken');
-    userToken.current = token;
+    if (token.length === 9) {
+      setIsLogged(false)
+    } else {
+      setIsLogged(true)
+    } userToken.current = token;
   }, [])
 
 
@@ -24,7 +31,7 @@ function Albuns() {
       setAlbums(data.items)
     }
 
-    if(userToken.current !== 'undefined'){
+    if (userToken.current !== 'undefined') {
       UsersAlbums();
     }
 
@@ -33,19 +40,27 @@ function Albuns() {
   return (
     <>
       <div className="content">
-        {isOpen == false ?
-          <div className="albumWrapper">
-            {albums.map((a, i) => {
-              return (
-                <AlbunsCards key={i} image={a.album.images[1].url} artist={a.album.artists[0].name} name={a.album.name} setOpen={setOpen} setAlbumId={setAlbumId} id={a.album.id}></AlbunsCards>
+        {isLogged ?
+          <>
+            {isOpen == false ? (
+              <div className="albumWrapper">
+                {albums.map((a, i) => {
+                  return (
+                    <AlbunsCards key={i} image={a.album.images[1].url} artist={a.album.artists[0].name} name={a.album.name} setOpen={setOpen} setAlbumId={setAlbumId} id={a.album.id}></AlbunsCards>
+                  )
+                })}
+              </div>
+            )
+              : (
+                <div>
+                  <AlbumDetail id={albumId}></AlbumDetail>
+                  {/* <p>{albumId}</p> */}
+                </div>
               )
-            })}
-          </div>
-        :
-            <div>
-              <AlbumDetail id={albumId}></AlbumDetail>
-              {/* <p>{albumId}</p> */}
-            </div>
+            }
+          </>
+          :
+          <CardHeader style={{ textAlign: "center" }}> Inicie Sessão para ver as Estatísticas</CardHeader>
         }
       </div>
     </>

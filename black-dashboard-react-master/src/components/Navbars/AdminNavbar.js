@@ -163,7 +163,7 @@ function AdminNavbar(props) {
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <p className="d-lg-none">Log out</p>
                 </DropdownToggle>
-                {!isAuthenticated ?
+                {window.localStorage.getItem('spotifyAuthToken').length === 9 ?
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
                       <DropdownItem className="nav-item" onClick={spotifyAuth}>Log In</DropdownItem>

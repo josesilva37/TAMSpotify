@@ -16,7 +16,6 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import TableList from "views/TableList.js";
 import UserProfile from "views/UserProfile.js";
 import Albuns from "views/Albuns";
 
@@ -33,13 +32,6 @@ var routes = [
     name: "Álbuns",
     icon: "tim-icons icon-book-bookmark",
     component: Albuns,
-    layout: "/admin"
-  },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "tim-icons icon-puzzle-10",
-    component: TableList,
     layout: "/admin"
   },
   {
