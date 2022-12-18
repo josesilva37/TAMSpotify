@@ -121,9 +121,6 @@ function Dashboard(props) {
 
   }, [userToken])
 
-
-
-
   const options = {
     scales: {
       xAxes: [{
@@ -138,7 +135,7 @@ function Dashboard(props) {
           beginAtZero: true,
           steps: 10,
           stepValue: 5,
-          max: 100
+          max: 110
         }
       }]
     },
@@ -146,11 +143,11 @@ function Dashboard(props) {
     plugins: {
       tooltip: {
         enabled: false,
-        external: function (context){
+        external: function (context) {
           console.log(context)
           context.tooltip.active = true
         }
-    },
+      },
       datalabels: {
         align: 'end',
         anchor: 'end',
@@ -185,6 +182,8 @@ function Dashboard(props) {
       },
     ],
   };
+
+
   function PieClicked(index) {
     valoresPie.current.map((p, i) => {
       if (i === index) {
@@ -193,7 +192,21 @@ function Dashboard(props) {
     })
   }
 
-
+  async function HandleArtists(value) {
+    const data = await getUserTopArtists(window.localStorage.getItem('spotifyAuthToken'), value.target.value);
+    if (data !== null && data !== undefined) {
+      var arrN = []
+      var arrP = []
+      data.items.map((p, i, array) => {
+        arrN.push(p.name)
+        arrP.push(p.popularity)
+      })
+      setLabels(arrN)
+      setPop(arrP)
+    }
+    console.log(data)
+    setArtists(data)
+  }
   function HandleTracks(value) {
     async function UsersTopTracks() {
       const data = await getUserTopTracks(userToken.current, value.target.value);
@@ -236,6 +249,11 @@ function Dashboard(props) {
             <Card className="card-chart">
               <CardHeader>
                 <h5 className="card-category">Top Artist's</h5>
+                <select onChange={HandleArtists}>
+                  <option value={1}>4 weeks</option>
+                  <option selected value={2}>6 months</option>
+                  <option value={3}>All time</option>
+                </select>
               </CardHeader>
               <CardBody>
                 <div className="chart-area" style={{ height: '100%' }}>
@@ -267,7 +285,7 @@ function Dashboard(props) {
                 <CardTitle tag="h4">Top 5 Daily Tracks</CardTitle>
                 <select onChange={HandleTracks}>
                   <option value={1}>4 weeks</option>
-                  <option value={2}>6 moths</option>
+                  <option value={2}>6 months</option>
                   <option value={3}>All time</option>
                 </select>
               </CardHeader>
