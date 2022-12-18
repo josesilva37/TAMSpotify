@@ -116,3 +116,21 @@ export async function getUserAlbums(token) {
         })
         .catch(error => console.log('error', error));
 }
+
+export async function getAlbum(token, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`https://api.spotify.com/v1/albums/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
+}

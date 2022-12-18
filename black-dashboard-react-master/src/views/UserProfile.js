@@ -93,7 +93,7 @@ function UserProfile() {
                       </CardBody>
                       <CardBody>
                         <div className="author">
-                          <p className="description" > <span style={{ fontWeight: "bold" }}> User Type:</span> {user.product.charAt(0).toUpperCase()}{user.product.slice(1)}</p>
+                          <p className="description" > <span style={{ fontWeight: "bold" }}> User Type:</span> {user.product}</p>
                           <br></br>
                           <p className="description"><span style={{ fontWeight: "bold" }}>Followers:</span> {user.followers.total}</p>
                         </div>
@@ -102,7 +102,7 @@ function UserProfile() {
                         <div className="button-container">
                           <a href={user.external_urls.spotify}>
                             <Button className="btn-icon btn-round" >
-                              <img src={require("/home/joseuni/Documents/GitHub/TAMSpotify/black-dashboard-react-master/src/assets/img/icons8-spotify-30.png")}></img>
+                              <img src={require("assets/img/icons8-spotify-30.png")} />
                             </Button>
                           </a>
                         </div>
@@ -115,13 +115,15 @@ function UserProfile() {
                 </CardFooter>
               </Card>
             </Col>
-          </Row>) : <div className="content">
+          </Row>
+        ) :
+          <div className="content">
 
-          <CardHeader style={{textAlign:"center"}}> Inicie Sessão para ver as Estatísticas</CardHeader>
+            <CardHeader style={{ textAlign: "center" }}> Inicie Sessão para ver as Estatísticas</CardHeader>
 
-        </div>}
+          </div>}
+
       </div>
-
     </>
   );
 }
