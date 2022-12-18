@@ -79,7 +79,7 @@ function UserProfile() {
                     </CardBody>
                     <CardBody>
                       <div className="author">
-                        <p className="description" > <span style={{ fontWeight: "bold" }}> User Type:</span> {user.product}</p>
+                        <p className="description" > <span style={{ fontWeight: "bold" }}> User Type:</span> {user.product.charAt(0).toUpperCase()}{user.product.slice(1)}</p>
                         <br></br>
                         <p className="description"><span style={{ fontWeight: "bold" }}>Followers:</span> {user.followers.total}</p>
                       </div>

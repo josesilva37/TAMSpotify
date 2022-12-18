@@ -141,13 +141,6 @@ function Dashboard(props) {
     },
     responsive: true,
     plugins: {
-      tooltip: {
-        enabled: false,
-        external: function (context) {
-          console.log(context)
-          context.tooltip.active = true
-        }
-      },
       datalabels: {
         align: 'end',
         anchor: 'end',
