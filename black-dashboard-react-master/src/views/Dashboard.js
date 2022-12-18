@@ -31,6 +31,7 @@ import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
 import { getUserPlaylists } from "SpotifyAPI/Endpoints";
 import { getUserTopTracks } from "SpotifyAPI/Endpoints";
 import { getUserTopArtists } from "SpotifyAPI/Endpoints";
+import Skeleton from "react-loading-skeleton";
 
 function Dashboard(props) {
   const valoresPie = useRef();
@@ -41,18 +42,17 @@ function Dashboard(props) {
   const [pop, setPop] = useState([])
   const userToken = useRef(undefined);
   const chartRef = useRef(null) //create reference hook
-  const [tooltip, setTooltip] = useState({
-    opacity: 0,
-    top: 0,
-    left: 0,
-    date: '',
-    value: '',
-  })
+  const [isLogged, setIsLogged] = useState(false)
 
   /////////////// USER TOKEN ////////////
 
   useEffect(() => {
     const token = window.localStorage.getItem('spotifyAuthToken');
+    if (token.length === 9) {
+      setIsLogged(false)
+    } else {
+      setIsLogged(true)
+    }
     userToken.current = token;
   }, [])
 
@@ -221,7 +221,7 @@ function Dashboard(props) {
 
   return (
     <>
-      <div className="content">
+      {isLogged ? (<div className="content">
         <Row>
           <Col lg="4">
             <Card className="card-chart">
@@ -311,7 +311,11 @@ function Dashboard(props) {
             </Card>
           </Col>
         </Row>
-      </div>
+      </div>)
+        : (<div className="content">
+            <CardHeader style={{textAlign:"center"}}> Inicie Sessão para ver as Estatísticas</CardHeader>
+        </div>)}
+
     </>
   );
 }

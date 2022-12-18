@@ -1,18 +1,23 @@
 
 import React, { useEffect, useRef, useState } from "react";
-
+import { CardHeader } from "reactstrap";
 import AlbunsCards from "components/AlbunsCards/AlbunsCards";
 import { getUserAlbums } from "SpotifyAPI/Endpoints";
 
 function Albuns() {
   const [albums, setAlbums] = useState([]);
   const userToken = useRef(undefined);
+  const [isLogged, setIsLogged] = useState(false)
 
+  /////////////// USER TOKEN ////////////
 
   useEffect(() => {
     const token = window.localStorage.getItem('spotifyAuthToken');
-    console.log(token)
-    userToken.current = token;
+    if (token.length === 9) {
+      setIsLogged(false)
+    } else {
+      setIsLogged(true)
+    } userToken.current = token;
   }, [])
 
 
@@ -23,7 +28,7 @@ function Albuns() {
       setAlbums(data.items)
     }
 
-    if(userToken.current !== 'undefined'){
+    if (userToken.current !== 'undefined') {
       UsersAlbums();
     }
 
@@ -32,7 +37,11 @@ function Albuns() {
   return (
     <>
       <div className="content">
-        <AlbunsCards></AlbunsCards>
+        {isLogged ?
+          <AlbunsCards></AlbunsCards>
+          :
+          <CardHeader style={{ textAlign: "center" }}> Inicie Sessão para ver as Estatísticas</CardHeader>
+        }
       </div>
     </>
   );
