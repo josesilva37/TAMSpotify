@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
 import {
-    Button,
-    ButtonGroup,
     Card,
     CardHeader,
-    CardBody,
-    CardTitle,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    Label,
-    FormGroup,
-    Input,
-    Table,
     Row,
-    Col,
-    UncontrolledTooltip
+    Col
   } from "reactstrap";
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
