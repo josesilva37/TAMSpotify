@@ -177,14 +177,6 @@ function Dashboard(props) {
   };
 
 
-  function PieClicked(index) {
-    valoresPie.current.map((p, i) => {
-      if (i === index) {
-        console.log(p);
-      }
-    })
-  }
-
   async function HandleArtists(value) {
     const data = await getUserTopArtists(window.localStorage.getItem('spotifyAuthToken'), value.target.value);
     if (data !== null && data !== undefined) {
@@ -203,7 +195,6 @@ function Dashboard(props) {
   function HandleTracks(value) {
     async function UsersTopTracks() {
       const data = await getUserTopTracks(userToken.current, value.target.value);
-      console.log(data);
       setTracks(data.items)
     }
 
@@ -228,13 +219,13 @@ function Dashboard(props) {
               <CardHeader>
                 <h5 className="card-category">Playlists</h5>
               </CardHeader>
-              <PieChart data={valoresPie.current}
+              <PieChart 
+                data={valoresPie.current}
                 style={{ height: '100%', padding: '25px 0px' }}
                 rounded
                 lineWidth={20}
                 paddingAngle={18}
                 animate
-                onClick={(e, segmentIndex) => PieClicked(segmentIndex)}
               ></PieChart>
             </Card>
           </Col>
