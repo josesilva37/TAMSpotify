@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
 // import PieChart from 'react-pie-graph-chart';
@@ -18,20 +17,10 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
-import Donut from 'react-donut';
-// core components
-import {
-  chartExample1,
-  chartExample2,
-  chartExample3,
-  chartExample4
-} from "variables/charts.js";
 import TrackTable from "components/TrackTable/TrackTable";
-import FeaturedArtist from "components/FeaturedArtist/FeaturedArtist";
 import { getUserPlaylists } from "SpotifyAPI/Endpoints";
 import { getUserTopTracks } from "SpotifyAPI/Endpoints";
 import { getUserTopArtists } from "SpotifyAPI/Endpoints";
-import Skeleton from "react-loading-skeleton";
 
 function Dashboard(props) {
   const valoresPie = useRef();

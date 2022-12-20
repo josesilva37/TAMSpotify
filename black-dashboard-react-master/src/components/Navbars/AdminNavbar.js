@@ -96,11 +96,7 @@ function AdminNavbar(props) {
     window.location = url;
 
   }
-  const goToProfile = async () => {
-    // let user = await getUserPlaylists(window.localStorage.getItem('spotifyAuthToken'))
-    // console.log(user)
-    return <Redirect to="/admin/user-profile"></Redirect>
-  }
+
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
