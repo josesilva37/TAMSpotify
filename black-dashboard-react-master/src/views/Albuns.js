@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { CardHeader } from "reactstrap";
 import "assets/css/custom.css"
@@ -54,7 +53,6 @@ function Albuns() {
               : (
                 <div>
                   <AlbumDetail id={albumId}></AlbumDetail>
-                  {/* <p>{albumId}</p> */}
                 </div>
               )
             }

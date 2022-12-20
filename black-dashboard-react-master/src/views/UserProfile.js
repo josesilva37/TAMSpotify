@@ -26,14 +26,10 @@ import {
   CardBody,
   CardFooter,
   CardText,
-  FormGroup,
-  Form,
-  Input,
   Row,
   Col
 } from "reactstrap";
 import { getUser } from "SpotifyAPI/Endpoints";
-import { getUserPlaylists } from "SpotifyAPI/Endpoints";
 
 
 function UserProfile() {
