@@ -166,3 +166,16 @@
 .songs{
     padding: 15px;
 }
+
+
+
+.album-detail-container .backButton{
+    border: none;
+    background: none;
+    color: #fff;
+    margin: 15px 0;
+}
+
+.album-detail-container .backButton img{
+    margin-right: 5px;
+}

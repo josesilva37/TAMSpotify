@@ -52,7 +52,7 @@ function Albuns() {
             )
               : (
                 <div>
-                  <AlbumDetail id={albumId}></AlbumDetail>
+                  <AlbumDetail id={albumId} setOpen={setOpen}></AlbumDetail>
                 </div>
               )
             }

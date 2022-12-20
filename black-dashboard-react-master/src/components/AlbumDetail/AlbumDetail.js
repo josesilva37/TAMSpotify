@@ -41,6 +41,7 @@ export default function AlbunsCards(props) {
     <div className="album-detail-container">
         {albumData !== null &&
             <div>
+                <button className="backButton" onClick={() => props.setOpen(false)}><img src={require("assets/img/icons8-left-arrow-24.png")}></img>Go Back</button>
                 <div className="album-detail-info">
                     <img src={albumData.images[0].url}></img>
                     <div className="sub-info">
