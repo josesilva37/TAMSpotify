@@ -177,7 +177,6 @@ function Dashboard(props) {
       setLabels(arrN)
       setPop(arrP)
     }
-    console.log(data)
     setArtists(data)
   }
   function HandleTracks(value) {

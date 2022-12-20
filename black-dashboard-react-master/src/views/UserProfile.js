@@ -49,7 +49,6 @@ function UserProfile() {
   }, [])
 
   async function loadData() {
-    console.log(user)
     if (user == undefined) {
       let userR = await getUser(window.localStorage.getItem('spotifyAuthToken'))
       setUser(userR)
