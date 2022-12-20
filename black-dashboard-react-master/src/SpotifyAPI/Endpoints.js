@@ -45,7 +45,6 @@ export async function getUserTopTracks(token, time) {
             break;
         case 2:
             tempo = 'medium_term';
-            console.log("entrou")
             break;
         case 3:
             tempo = 'long_term';
@@ -69,7 +68,6 @@ export async function getUserTopArtists(token, time) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
     let tempo = 'medium_term';
-    console.log(time)
     switch (parseInt(time)) {
         case 1:
             tempo = 'short_term';
@@ -78,11 +76,9 @@ export async function getUserTopArtists(token, time) {
             tempo = 'medium_term';
             break;
         case 3:
-            console.log("entrou")
             tempo = 'long_term';
             break;
     }
-    console.log(tempo)
 
     var requestOptions = {
         method: 'GET',
