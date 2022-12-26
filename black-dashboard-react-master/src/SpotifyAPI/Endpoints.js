@@ -124,9 +124,44 @@ export async function getAlbum(token, id) {
     };
 
     return fetch(`https://api.spotify.com/v1/albums/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-     return data;
-    })
-    .catch(error => console.log('error', error));
+        .then((response) => response.json())
+        .then((data) => {
+            return data;
+        })
+        .catch(error => console.log('error', error));
+}
+
+export async function addLikedSong(token, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch(`https://api.spotify.com/v1/me/tracks?ids=${id}`, requestOptions)
+        .then(response => response.text())
+        .then((data) => {
+            return data;
+        })
+        .catch(error => console.log('error', error));
+}
+export async function checkIfLikedSong(token, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, requestOptions)
+        .then(response => {return response.text()})
+        .then((data) => {
+            return data;
+        })
+        .catch(error => console.log('error', error));
 }
