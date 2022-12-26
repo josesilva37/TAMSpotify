@@ -151,7 +151,7 @@ export async function addLikedSong(token, id) {
         .catch(error => console.log('error', error));
 }
 
-export async function getLikedSongs(token) {
+export async function getLikedSongs(token, offset) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
 
@@ -160,8 +160,8 @@ export async function getLikedSongs(token) {
         headers: myHeaders,
         redirect: 'follow'
     };
-
-    return fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, requestOptions)
+    
+    return fetch(`https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
      return data;
