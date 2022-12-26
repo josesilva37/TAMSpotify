@@ -30,7 +30,6 @@ function LikedSongs() {
     async function UsersLikedSongs() {
       const data = await getLikedSongs(userToken.current);
       setLiked(data.items);
-      console.log(data);
     }
 
     if (userToken.current !== 'undefined') {
@@ -50,7 +49,8 @@ function LikedSongs() {
   async function removeTrack(id){
     const data = await deleteLikedSong(userToken.current, id);
 
-    console.log(data);
+    const data2 = await getLikedSongs(userToken.current)
+    setLiked(data2.items);
   }
   return (
     <>
