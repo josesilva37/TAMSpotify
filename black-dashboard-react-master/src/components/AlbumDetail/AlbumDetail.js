@@ -24,7 +24,8 @@ export default function AlbunsCards(props) {
     async function GetAlbum() {
         const data = await getAlbum(userToken.current, props.id);
         data.tracks.items.map(async (e) => {
-          console.log(await checkIfLikedSong(userToken.current, e.id))
+          const b = await checkIfLikedSong(userToken.current, e.id)
+          console.log(b)
         })
         setAlbumData(data); 
       }

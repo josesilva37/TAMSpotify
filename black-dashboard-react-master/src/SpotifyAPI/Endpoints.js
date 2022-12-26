@@ -149,6 +149,7 @@ export async function addLikedSong(token, id) {
         .catch(error => console.log('error', error));
 }
 export async function checkIfLikedSong(token, id) {
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
 
@@ -159,9 +160,10 @@ export async function checkIfLikedSong(token, id) {
     };
 
     fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, requestOptions)
-        .then(response => {return response.text()})
+        // .then(response => response.text())
         .then((data) => {
             return data;
         })
+        // .then(result => console.log(JSON.parse(result.text())))
         .catch(error => console.log('error', error));
 }
