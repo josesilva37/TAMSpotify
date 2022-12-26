@@ -29,7 +29,7 @@ function LikedSongs() {
 
   useEffect(() => {
     async function UsersLikedSongs() {
-      const data = await getLikedSongs(userToken.current);
+      const data = await getLikedSongs(userToken.current, 0);
       setLiked(data.items);
     }
 
