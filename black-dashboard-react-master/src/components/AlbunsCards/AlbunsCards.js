@@ -4,7 +4,6 @@ import "assets/css/custom.css"
 export default function AlbunsCards(props) {
 
   function HandleClick () {
-    console.log("entrou", props.id)
     props.setOpen(true);
     props.setAlbumId(props.id)
   }

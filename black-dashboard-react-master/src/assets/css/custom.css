@@ -179,3 +179,10 @@
 .album-detail-container .backButton img{
     margin-right: 5px;
 }
+
+
+
+.coracao{
+    cursor: pointer;
+    color: #008000;
+}
