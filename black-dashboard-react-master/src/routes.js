@@ -18,6 +18,7 @@
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
 import Albuns from "views/Albuns";
+import LikedSongs from "views/LikedSongs";
 
 var routes = [
   {
@@ -32,6 +33,13 @@ var routes = [
     name: "Álbuns",
     icon: "tim-icons icon-book-bookmark",
     component: Albuns,
+    layout: "/admin"
+  },
+  {
+    path: "/liked-songs",
+    name: "Liked Songs",
+    icon: "tim-icons icon-heart-2",
+    component: LikedSongs,
     layout: "/admin"
   },
   {

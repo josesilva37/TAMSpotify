@@ -1,3 +1,5 @@
+import { stringify } from "query-string";
+
 export async function getUser(token) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
@@ -148,6 +150,43 @@ export async function addLikedSong(token, id) {
         })
         .catch(error => console.log('error', error));
 }
+
+export async function getLikedSongs(token) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
+}
+
+export async function deleteLikedSong(token, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return fetch(`https://api.spotify.com/v1/me/tracks?ids=${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+     return data;
+    })
+    .catch(error => console.log('error', error));
+}
+
 export async function checkIfLikedSong(token, id) {
 
     var myHeaders = new Headers();
