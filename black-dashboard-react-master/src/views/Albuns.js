@@ -35,7 +35,7 @@ function Albuns() {
     }
 
   }, [userToken])
-
+  console.log(albums)
   return (
     <>
       <div className="content">
