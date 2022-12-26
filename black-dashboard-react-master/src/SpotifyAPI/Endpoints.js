@@ -1,3 +1,5 @@
+import { stringify } from "query-string";
+
 export async function getUser(token) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
@@ -194,7 +196,7 @@ export async function checkIfLikedSong(token, id) {
         headers: myHeaders,
         redirect: 'follow'
     };
-    
+
     fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, requestOptions)
         .then(response => {return response.text()})
         .then((data) => {
