@@ -7,6 +7,7 @@ import {
   } from "reactstrap";
 import TrackTable from "components/TrackTable/TrackTable";
 import { deleteLikedSong } from "SpotifyAPI/Endpoints";
+import moment from "moment";
 
 
 function LikedSongs() {
@@ -76,7 +77,7 @@ function LikedSongs() {
                             <td><TrackTable trackName={l.track.name} artist={l.track.artists[0].name} image={l.track.album.images[2].url}></TrackTable></td>
                             <td>{l.track.album.name}</td>
                             <td className="text-center">{millisToMinutesAndSeconds(l.track.duration_ms)}</td>
-                            <td>{l.added_at}</td>
+                            <td>{moment(l.added_at).format("DD/MM/YY")}</td>
                             <td><img src={require("assets/img/icons8-loading-heart-24.png")} className="coracao"  onClick={() => removeTrack(l.track.id)}></img></td>
                           </tr>
                         )
