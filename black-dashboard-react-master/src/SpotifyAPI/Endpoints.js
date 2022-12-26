@@ -149,7 +149,6 @@ export async function addLikedSong(token, id) {
         .catch(error => console.log('error', error));
 }
 
-
 export async function getLikedSongs(token) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
@@ -185,6 +184,17 @@ export async function deleteLikedSong(token, id) {
     })
     .catch(error => console.log('error', error));
 }
+
+export async function checkIfLikedSong(token, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+    
     fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, requestOptions)
         .then(response => {return response.text()})
         .then((data) => {
