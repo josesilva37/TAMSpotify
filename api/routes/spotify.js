@@ -1,27 +1,41 @@
 const express=require('express');
-const { getUser, getUserPlaylists, getUserTopTracks, getUserTopArtists } = require('../Controllers/Spotify');
+const { getUser, getUserPlaylists, getUserTopTracks, getUserTopArtists, addLikedSong, getLikedSongs, deleteLikedSong, checkIfLikedSong } = require('../Controllers/Spotify');
 const router=express.Router()
 
 
-router.get("/User",(req,res)=>{
-    res.send(getUser(req.body.token))
+router.get("/User/:token",async (req,res)=>{
+    res.send(await getUser(req.params.token))
 })
-router.get("/UserPlaylists",(req,res)=>{
-    res.send(getUserPlaylists(req.body.token))
+router.get("/UserPlaylists/:token",async (req,res)=>{
+    res.send(await getUserPlaylists(req.params.token))
 })
-router.get("/UserTopTracks",(req,res)=>{
-    res.send(getUserTopTracks(req.body.token, req.params.time))
+router.get("/UserTopTracks/:time/:token",async (req,res)=>{
+    res.send(await getUserTopTracks(req.params.token, req.params.time))
 })
-router.get("/UserTopArtists",(req,res)=>{
-    res.send(getUserTopArtists(req.body.token, req.params.time))
+router.get("/UserTopArtists",async (req,res)=>{
+    res.send(await getUserTopArtists(req.params.token, req.params.time))
 })
-router.get("/UserAlbums",(req,res)=>{
-    res.send(getUser(req.body.token))
+router.get("/UserAlbums/:token",async (req,res)=>{
+    res.send(await getUser(req.params.token))
 })
-router.get("/UserAlbum",(req,res)=>{
-    res.send(getUser(req.body.token, req.body.id))
+router.get("/UserAlbum/:id/:token",async (req,res)=>{
+    res.send(await getUser(req.params.token, req.params.id))
 })
 
+router.put("/addLikedSong/:id/:token", async (req, res) => {
+    res.send(await addLikedSong(req.params.token , req.params.id))
+})
 
+router.get("/listLikedSongs/:offset/:token", async ( req, res) => {
+    res.send(await getLikedSongs(req.params.token, req.params.offset))
+})
+
+router.delete("/deleteLikedSong/:id/:token", async (req, res)=> {
+    res.send(await deleteLikedSong(req.params.token, req.params.id))
+})
+
+router.get("isLikedSong/:id/:token", async (req,res)=>{
+    res.send(await checkIfLikedSong(req.params.token, req.params.id))
+})
 
 module.exports=router;
