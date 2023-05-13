@@ -28,6 +28,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /UserPlaylists/{token}:
     get:
+      tags:
+        - User
       summary: Get user playlists
       parameters:
         - name: token
@@ -47,6 +49,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /UserTopTracks/{time}/{token}:
     get:
+      tags:
+        - User
       summary: Get user top tracks
       parameters:
         - name: time
@@ -72,6 +76,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /UserTopArtists:
     get:
+      tags:
+        - User
       summary: Get user top artists
       parameters:
         - name: token
@@ -97,6 +103,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /UserAlbums/{token}:
     get:
+      tags:
+        - User
       summary: Get user albums
       parameters:
         - name: token
@@ -116,6 +124,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /UserAlbum/{id}/{token}:
     get:
+      tags:
+        - User
       summary: Get user album by ID
       parameters:
         - name: id
@@ -142,7 +152,7 @@ paths:
   /addLikedSong/{id}/{token}:
     put:
       tags:
-        - Liked Song
+        - Liked Songs
       summary: Add a new liked song
       description: Add a new liked song to the user's liked songs
       parameters:
