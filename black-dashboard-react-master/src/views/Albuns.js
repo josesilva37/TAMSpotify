@@ -41,7 +41,7 @@ function Albuns() {
       <div className="content">
         {isLogged ?
           <>
-            {isOpen == false ? (
+            {isOpen === false ? (
               <div className="albumWrapper">
                 {albums.map((a, i) => {
                   return (

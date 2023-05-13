@@ -1,0 +1,21 @@
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 30px;
+}
+
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.logoWrapper .app-name {
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+}
