@@ -4,6 +4,7 @@ const router=express.Router()
 
 
 router.get("/User/:token",async (req,res)=>{
+    console.log(req.params.token)
     res.send(await getUser(req.params.token))
 })
 router.get("/UserPlaylists/:token",async (req,res)=>{

@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Nav from "./components/Navigation/nav";
+import Navig from "./components/Navigation/nav";
 import Sidebar from "./components/Sidebar/sidebar";
 import { useState } from "react";
 import Homepage from "./pages/Homepage";
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <Nav />
+      <Navig />
       <div className="contentWrapper">
         <Sidebar setComponent={setComponent} />
         {component == 0 ? (
