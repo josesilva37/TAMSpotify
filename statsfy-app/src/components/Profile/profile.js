@@ -12,13 +12,13 @@ import {
 
 function Profile(props) {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "80%" }}>
       <Col md="8">
         <Card>
           <CardHeader>
             <h5 className="title">Profile</h5>
           </CardHeader>
-          <CardBody style={{ display: "flex", justifyContent: "center" , width: "80%"}}>
+          <CardBody style={{ display: "flex", justifyContent: "center" }}>
             {props.user != undefined && (
               <Col md="4">
                 <Card className="card-user">
