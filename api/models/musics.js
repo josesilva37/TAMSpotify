@@ -9,5 +9,7 @@ module.exports = function Musics(sequelize) {
     added_by: {
       type: DataTypes.STRING,
     },
+  }, {
+    timestamps: false, // Disable createdAt and updatedAt
   });
 };
