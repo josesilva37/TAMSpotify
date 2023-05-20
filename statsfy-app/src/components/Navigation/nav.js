@@ -1,5 +1,5 @@
 import "./nav.css";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Collapse,
@@ -20,12 +20,20 @@ import {
 } from "reactstrap";
 import { getUser } from "../../services/api";
 
-function Navig() {
+function Navig(props) {
+  const [profile, setProfile] = useState();
+  const [userGetToken, setUserGetToken] = useState(false);
 
   useEffect(() => {
+    
     getUser()
-  }, [])
-  
+      .then((data) => {
+        setProfile(data);
+        console.log(data);
+        props.setUser(data)
+      })
+      .catch((error) => console.log(error));
+  }, [userGetToken]);
 
   useEffect(() => {
     const hashParams = {};
@@ -36,14 +44,13 @@ function Navig() {
       hashParams[e[1]] = decodeURIComponent(e[2]);
       e = r.exec(q);
     }
-    const access_token = hashParams.access_token
-    localStorage.setItem('spotifyAuthToken', access_token);
-    localStorage.getItem('spotifyAuthToken');
-
-  }, [])
+    const access_token = hashParams.access_token;
+    localStorage.setItem("spotifyAuthToken", access_token);
+    localStorage.getItem("spotifyAuthToken");
+  }, []);
 
   const spotifyAuth = () => {
-    // setIsAuthencticated(true);
+    setUserGetToken(true);
     var scope =
       "user-read-private user-read-email user-read-playback-position user-top-read user-read-recently-played playlist-read-private playlist-read-collaborative user-library-read user-library-modify";
     let url =
@@ -63,9 +70,14 @@ function Navig() {
         <img src={"../icons8-listen-to-music.png"}></img>
         <p className="app-name">Statsfy</p>
       </div>
-      {window.localStorage.getItem('spotifyAuthToken') !== undefined ? (
-        <div className="photo">
-          <img alt="..."  />
+      {window.localStorage.getItem("spotifyAuthToken") !== undefined &&
+      window.localStorage.getItem("spotifyAuthToken") !== "undefined" ? (
+        <div>
+          {profile && profile.images && (
+            <div className="profile" onClick={() => props.setComponent(3)}>
+              <img src={profile.images[0].url} alt="..." className="photo" />
+            </div>
+          )}
         </div>
       ) : (
         <DropdownMenu className="dropdown-navbar" right tag="ul">

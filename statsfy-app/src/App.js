@@ -8,12 +8,14 @@ import Albuns from "./pages/Albuns";
 import LikedSongs from "./pages/LikedSongs";
 import UserProfile from "./pages/UserProfile";
 
+
 function App() {
   const [component, setComponent] = useState(0);
+  const [user, setUser] = useState()
 
   return (
     <div>
-      <Navig />
+      <Navig setComponent={setComponent} setUser={setUser} />
       <div className="contentWrapper">
         <Sidebar setComponent={setComponent} />
         {component == 0 ? (
@@ -23,7 +25,7 @@ function App() {
         ) : component == 2 ? (
           <LikedSongs />
         ) : (
-          <UserProfile />
+          <UserProfile user={user}/>
         )}
       </div>
     </div>

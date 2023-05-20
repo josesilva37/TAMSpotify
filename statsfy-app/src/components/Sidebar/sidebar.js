@@ -7,7 +7,6 @@ function Sidebar(props) {
         <p className='menu-item' onClick={() => props.setComponent(0)}>Homepage</p>
         <p className='menu-item' onClick={() => props.setComponent(1)}>Albuns</p>
         <p className='menu-item' onClick={() => props.setComponent(2)}>Liked Songs</p>
-        <p className='menu-item' onClick={() => props.setComponent(3)}>User Profile</p>
     </div>
   );
 }

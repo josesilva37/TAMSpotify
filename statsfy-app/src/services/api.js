@@ -3,13 +3,16 @@ async function getUser() {
     method: 'GET',
     redirect: 'follow'
   };
-  console.log("http://localhost:3080/spotify/User/" + window.localStorage.getItem('spotifyAuthToken'))
-  fetch("http://localhost:3080/spotify/User/" + window.localStorage.getItem('spotifyAuthToken'), requestOptions)
-  .then(response => response.json())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-}
 
+  try {
+    const response = await fetch("http://localhost:3080/spotify/User/" + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
 module.exports = {
   getUser: getUser
 }

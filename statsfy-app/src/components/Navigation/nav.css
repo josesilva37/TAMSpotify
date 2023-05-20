@@ -5,7 +5,12 @@
     align-items: center;
     margin: 10px 30px;
 }
-
+.photo{
+    vertical-align: middle;
+    width: 60px;
+    height:60px;
+    border-radius: 50%;
+}
 
 .logoWrapper {
     display: flex;
@@ -18,4 +23,23 @@
     color: white;
     font-size: 30px;
     font-weight: 600;
+}
+.nav-item{
+    background-color: #2b8105; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius:25px;
+  
+}
+.nav-item:hover{
+    cursor: pointer;
+}
+.profile:hover{
+    cursor: pointer;
+
 }
