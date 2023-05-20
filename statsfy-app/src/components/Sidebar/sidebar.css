@@ -11,8 +11,15 @@
     align-items: flex-start;
     padding: 10px 30px;
     margin: 0 30px;
+    color: white;
 }
 
 .sidebar-container .menu-item {
     cursor: pointer;
+}
+
+
+.sidebar-container .active {
+    color: black;
+    text-decoration: underline;
 }

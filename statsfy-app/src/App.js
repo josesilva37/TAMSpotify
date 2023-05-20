@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage";
 import Albuns from "./pages/Albuns";
 import LikedSongs from "./pages/LikedSongs";
 import UserProfile from "./pages/UserProfile";
+import Collaborative from "./pages/Collaborative";
 
 function App() {
   const [component, setComponent] = useState(0);
@@ -15,15 +16,17 @@ function App() {
     <div>
       <Nav />
       <div className="contentWrapper">
-        <Sidebar setComponent={setComponent} />
+        <Sidebar setComponent={setComponent} component={component} />
         {component == 0 ? (
           <Homepage />
         ) : component == 1 ? (
           <Albuns />
         ) : component == 2 ? (
           <LikedSongs />
-        ) : (
+        ) : component == 3 ? (
           <UserProfile />
+        ) : (
+          <Collaborative />
         )}
       </div>
     </div>
