@@ -75,7 +75,7 @@ function Navig(props) {
         <div>
           {profile && profile.images && (
             <div className="profile" onClick={() => props.setComponent(3)}>
-              <img src={profile.images[0].url} alt="..." className="photo" />
+              <img src={profile.images[0].url} alt="..." className="photoProfile" />
             </div>
           )}
         </div>
