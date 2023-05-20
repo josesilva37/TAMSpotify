@@ -5,7 +5,7 @@ const router=express.Router()
 
 
 router.get("/User/:token",async (req,res)=>{
-    console.log(req.params.token)
+    
     res.send(await getUser(req.params.token))
 })
 router.get("/UserPlaylists/:token",async (req,res)=>{
@@ -14,7 +14,7 @@ router.get("/UserPlaylists/:token",async (req,res)=>{
 router.get("/UserTopTracks/:time/:token",async (req,res)=>{
     res.send(await getUserTopTracks(req.params.token, req.params.time))
 })
-router.get("/UserTopArtists",async (req,res)=>{
+router.get("/UserTopArtists/:time/:token",async (req,res)=>{
     res.send(await getUserTopArtists(req.params.token, req.params.time))
 })
 router.get("/UserAlbums/:token",async (req,res)=>{
