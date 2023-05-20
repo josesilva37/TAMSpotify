@@ -41,3 +41,20 @@
 .contentWrapper {
   display: flex;
 }
+
+
+.collaborativeWrapper {
+  display: block;
+  flex-grow: 1;
+}
+
+.collaborativeWrapper .title{
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+}
+
+.collaborativeWrapper .topWrapper {
+  display: flex;
+  justify-content: space-between;
+}
