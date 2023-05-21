@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const Playlists = require('./playlists');
-const Musics = require('./musics');
 
 module.exports = function PlaylistsMusics(sequelize) {
   const PlaylistsMusics = sequelize.define('playlists_musics', {
@@ -18,7 +17,6 @@ module.exports = function PlaylistsMusics(sequelize) {
 
   // Define associations
   PlaylistsMusics.belongsTo(Playlists(sequelize), { foreignKey: 'playlistId' });
-  PlaylistsMusics.belongsTo(Musics(sequelize), { foreignKey: 'musicId' });
 
   return PlaylistsMusics;
 };

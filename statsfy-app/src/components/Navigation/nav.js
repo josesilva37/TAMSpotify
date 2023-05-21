@@ -18,7 +18,7 @@ import {
   NavbarToggler,
   ModalHeader,
 } from "reactstrap";
-import { getUser } from "../../services/api";
+import { createUserDb, getUser, userExist } from "../../services/api";
 
 function Navig(props) {
   const [profile, setProfile] = useState();
@@ -29,8 +29,15 @@ function Navig(props) {
     getUser()
       .then((data) => {
         setProfile(data);
-        console.log(data);
+        // console.log(data);
         props.setUser(data)
+
+        userExist(data.email)
+          .then((user) => {
+            if(user == false){
+              createUserDb(data.email, data.display_name).then((res) => console.log(res))
+            }
+          })
       })
       .catch((error) => console.log(error));
   }, [userGetToken]);

@@ -28,7 +28,7 @@ function App() {
         ) : component == 3 ? (
           <UserProfile user={user}/>
         ) : (
-          <Collaborative />
+          <Collaborative user={user}/>
         )}
       </div>
     </div>

@@ -46,6 +46,7 @@
 .collaborativeWrapper {
   display: block;
   flex-grow: 1;
+  margin-right: 100px;
 }
 
 .collaborativeWrapper .title{
@@ -57,4 +58,40 @@
 .collaborativeWrapper .topWrapper {
   display: flex;
   justify-content: space-between;
+}
+
+.collaborativeWrapper .btnPlaylist {
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.collaborativeWrapper .playlistsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.collaborativeWrapper .playlistsWrapper .playlistTitle{
+  color: #fff;
+  font-size: 30px;
+}
+
+.collaborativeWrapper .playlistsWrapper .playlistObjectWrapper{
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  width: 100%;
+  color: #fff;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.collaborativeWrapper .playlistsWrapper .playlistObjectWrapper .playlistName{
+  margin-left: 20px;
+  flex-grow: 1;
 }
