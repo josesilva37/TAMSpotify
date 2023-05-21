@@ -91,6 +91,67 @@ async function getUserAlbum(id) {
     throw error;
   }
 }
+async function addLikedSong(id) {
+  var requestOptions = {
+    method: 'PUT',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/addLikedSong/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+async function listLikedSongs(offset) {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/listLikedSongs/" +  offset + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+async function deleteLikedSong(id) {
+  var requestOptions = {
+    method: 'DELETE',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/deleteLikedSong/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+
+async function isLikedSong(id) {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/isLikedSong/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
 
 module.exports = {
   getUser: getUser,
@@ -98,5 +159,9 @@ module.exports = {
   getUserTopTracks: getUserTopTracks,
   getUserTopArtists: getUserTopArtists,
   getUserAlbums:getUserAlbums,
-  getUserAlbum: getUserAlbum
+  getUserAlbum: getUserAlbum,
+  addLikedSong: addLikedSong,
+  listLikedSongs: listLikedSongs,
+  deleteLikedSong: deleteLikedSong,
+  isLikedSong: isLikedSong
 }
