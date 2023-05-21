@@ -25,7 +25,6 @@ function Navig(props) {
   const [userGetToken, setUserGetToken] = useState(false);
 
   useEffect(() => {
-    
     getUser()
       .then((data) => {
         setProfile(data);
@@ -82,18 +81,18 @@ function Navig(props) {
         <div>
           {profile && profile.images && (
             <div className="profile" onClick={() => props.setComponent(3)}>
-              <img src={profile.images[0].url} alt="..." className="photoProfile" />
+              <img
+                src={profile.images[0].url}
+                alt="..."
+                className="photoProfile"
+              />
             </div>
           )}
         </div>
       ) : (
-        <DropdownMenu className="dropdown-navbar" right tag="ul">
-          <NavLink>
-            <DropdownItem className="nav-item" onClick={spotifyAuth}>
-              Log In
-            </DropdownItem>
-          </NavLink>
-        </DropdownMenu>
+        <div className="nav-item" onClick={spotifyAuth}>
+          Log In
+        </div>
       )}
     </div>
   );
