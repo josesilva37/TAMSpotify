@@ -10,6 +10,8 @@ const {
   checkIfLikedSong,
 } = require("../Controllers/Spotify");
 const router = express.Router();
+const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller')
+
 
 router.get("/User/:token", async (req, res) => {
   getUser(req.params.token)
@@ -149,4 +151,43 @@ router.get("/isLikedSong/:id/:token", async (req, res) => {
     });
 });
 
-module.exports = router;
+router.get("/getAllUsersDb", (req, res) => {
+    getAllUsers(req, res)
+        .then(users => {
+            res.json(users);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log(err);
+        });
+});
+
+router.get("/getUserDb/:email", (req, res) => {
+    const email = req.params.email;
+
+    getUserDb(req, res, email)
+        .then(user => {
+            res.json(user);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log(err);
+        });
+});
+
+router.post("/createUserDb/:email/:name", (req, res) => {
+    const email = req.params.email;
+    const nome = req.params.name
+    
+    createUser(req, res, email, nome)
+        .then(user => {
+            res.json(user);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log(err);
+        });
+});
+
+
+module.exports=router;
