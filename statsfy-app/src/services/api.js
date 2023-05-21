@@ -70,6 +70,7 @@ async function getUserAlbums() {
   try {
     const response = await fetch(globalUrl + "/spotify/UserAlbums/" + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.log('error', error);
