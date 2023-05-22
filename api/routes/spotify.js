@@ -13,9 +13,11 @@ const {
   checkIfLikedSong,
   getUserAlbums,
   getTrack,
+  getAlbum
 } = require("../Controllers/Spotify");
 const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller');
 const { addSongToPlaylist, getAllSongsFromPlaylist } = require("../Controllers/sequelize/playlist_music.controller");
+
 
 
 router.get("/User/:token", async (req, res) => {
@@ -87,7 +89,7 @@ router.get("/UserAlbums/:token", async (req, res) => {
 });
 
 router.get("/UserAlbum/:id/:token", async (req, res) => {
-  getUserAlbum(req.params.token, req.params.id)
+  getAlbum(req.params.token, req.params.id)
     .then((data) => {
       if (data.error) {
         res.status(data.error.status).json({ message: data.error });

@@ -8,13 +8,13 @@ import {
 import TrackTable from "../../components/TrackTable/TrackTable";
 import { addLikedSong } from "../../services/api";
 // import { checkIfLikedSong } from "SpotifyAPI/Endpoints";
-import { getLikedSongs } from "../../services/api";
+import { listLikedSongs } from "../../services/api";
 import { deleteLikedSong } from "../../services/api";
 
 
 export default function AlbumDetail(props) {
   const userToken = useRef(undefined);
-  const [albumData, setAlbumData] = useState(null)
+  const [albumData, setAlbumData] = useState()
   const [update, setUpdate] = useState(false)
   useEffect(() => {
     const token = window.localStorage.getItem('spotifyAuthToken');
@@ -26,15 +26,16 @@ export default function AlbumDetail(props) {
     async function GetAlbum() {
       setUpdate(false)
       let arr= []
-      const albums = await getUserAlbum(userToken.current, props.id);
-      const likedSongs = await getLikedSongs(userToken.current, 0)
+      const albums = await getUserAlbum(props.id);
+      console.log(albums)
+      const likedSongs = await listLikedSongs()
+      console.log(likedSongs)
       let offset = 50
-
       likedSongs.items.map((e) => {
         arr.push(e.track.id)
       })
       while(likedSongs.total > offset){
-        const lk = await getLikedSongs(userToken.current, offset)
+        const lk = await listLikedSongs(offset)
         offset = offset + 50
         lk.items.map((e) => {
           arr.push(e.track.id)
@@ -49,21 +50,20 @@ export default function AlbumDetail(props) {
           }
         })
       })
-
+      console.log("cheguei")
       setAlbumData(albums);
     }
 
     if (userToken.current !== 'undefined') {
       GetAlbum();
-      console.log("entrei")
     }
   }, [update])
 
   async function addToLikedSongs(e) {
     if(e.isLiked){
-      await deleteLikedSong(userToken.current, e.id)
+      await deleteLikedSong(e.id)
     }else{
-      await addLikedSong(userToken.current, e.id)
+      await addLikedSong(e.id)
     }
     setUpdate(true)
   }
@@ -77,7 +77,7 @@ export default function AlbumDetail(props) {
   return (
 
     <div className="album-detail-container">
-      {albumData !== null &&
+      {albumData &&
         <div>
           <button className="backButton" onClick={() => props.setOpen(false)}><img src={require("../../assets/img/icons8-left-arrow-24.png")}></img>Go Back</button>
           <div className="album-detail-info">
@@ -96,11 +96,11 @@ export default function AlbumDetail(props) {
           <Table className="tablesorter" responsive>
             <thead className="text-primary">
               <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Artists</th>
-                <th className="text-center"><i className="tim-icons icon-watch-time" /></th>
-                <th className="text-center"></th>
+                <th style={{color:'black'}}>#</th>
+                <th style={{color:'black'}}> Title</th>
+                <th style={{color:'black'}}>Artists</th>
+                <th style={{color:'black', textAlign:'center'}}><i className="tim-icons icon-watch-time" />Length</th>
+                <th style={{color:'black'}}></th>
               </tr>
             </thead>
             <tbody>
