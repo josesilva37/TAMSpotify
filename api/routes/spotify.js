@@ -1,9 +1,7 @@
-const express=require('express');
-const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller');
+const express = require("express")
 const { createPlaylist, getPlaylistById } = require('../Controllers/sequelize/playlists.controller');
-const { createPlaylistUser, getUsersPlaylists, getPlaylistUsers } = require('../Controllers/sequelize/playlist_user.controller');
+const { createPlaylistUser, getUsersPlaylists, getPlaylistUsers, addUserToPlaylist } = require('../Controllers/sequelize/playlist_user.controller');
 const router=express.Router()
-const express = require("express");
 const {
   getUser,
   getUserPlaylists,
@@ -14,8 +12,10 @@ const {
   deleteLikedSong,
   checkIfLikedSong,
   getUserAlbums,
+  getTrack,
 } = require("../Controllers/Spotify");
-const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller')
+const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller');
+const { addSongToPlaylist, getAllSongsFromPlaylist } = require("../Controllers/sequelize/playlist_music.controller");
 
 
 router.get("/User/:token", async (req, res) => {
@@ -156,6 +156,21 @@ router.get("/isLikedSong/:id/:token", async (req, res) => {
     });
 });
 
+
+router.get("/getTrack/:id/:token", async (req, res) => {
+  getTrack(req.params.token, req.params.id)
+    .then((data) => {
+      if (data.error) {
+        res.status(data.error.status).json({ message: data.error });
+      } else {
+        res.status(200).json(data);
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ status: "error", message: error.message });
+    });
+});
+
 // router.get("/getAllUsersDb", (req, res) => {
 //     getAllUsers(req, res)
 //         .then(users => {
@@ -238,6 +253,20 @@ router.post("/createPlaylistUser/:playlistId/:userEmail", (req, res) => {
         });
 });
 
+router.post("/addUserToPlaylist/:playlistId/:userEmail", (req, res) => {
+    const email = req.params.userEmail
+    const playlistId = req.params.playlistId
+    
+    addUserToPlaylist(playlistId, email)
+        .then((resp) => {
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log(err);
+        });
+});
+
 
 router.get("/getUsersPlaylits/:email", (req, res) => {
     const email = req.params.email;
@@ -280,7 +309,36 @@ router.get("/getPlaylistUsers/:playlistId", (req, res) => {
         res.sendStatus(500);
         console.log(err);
       });
-  });
+});
+
+router.post("/addSongToPlaylist/:playlistId/:musicId", (req, res) => {
+  const musicId = req.params.musicId
+  const playlistId = req.params.playlistId
+  
+  addSongToPlaylist(playlistId, musicId)
+      .then((resp) => {
+        console.log("resposta: ", resp)
+          res.sendStatus(200);
+      })
+      .catch(err => {
+          res.sendStatus(500);
+          console.log(err);
+      });
+});
+
+
+router.get("/getAllSongsFromPlaylist/:playlistId", (req, res) => {
+  const playlistId = req.params.playlistId;
+
+  getAllSongsFromPlaylist(playlistId)
+    .then((resp) => {
+      res.json(resp);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+      console.log(err);
+    });
+});
   
 
 

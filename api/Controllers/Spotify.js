@@ -217,6 +217,23 @@ async function checkIfLikedSong(token, id) {
     .catch((error) => console.log("error", error));
 }
 
+async function getTrack(token, id) {
+  var myHeaders = new fetch.Headers();
+  myHeaders.append("Authorization", "Bearer " + token);
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return fetch(`https://api.spotify.com/v1/tracks/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => console.log("error", error));
+}
 
 module.exports= {
     getUser: getUser,
@@ -229,5 +246,6 @@ module.exports= {
     deleteLikedSong : deleteLikedSong,
     getLikedSongs : getLikedSongs,
     getUserAlbums : getUserAlbums,
-    getAlbum : getAlbum
+    getAlbum : getAlbum,
+    getTrack
 }

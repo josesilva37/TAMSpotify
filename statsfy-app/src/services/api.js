@@ -252,6 +252,67 @@ async function getPlaylistUsersDb(playlistId) {
   }
 }
 
+async function addSongToPlaylist(playlistId, musicId) {
+
+  var requestOptions = {
+    method: 'POST',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/addSongToPlaylist/" + playlistId + "/" + musicId , requestOptions);
+    const data = await response.status;
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+
+
+async function getAllSongsFromPlaylist(playlistId) {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/getAllSongsFromPlaylist/" + playlistId, requestOptions);
+    const data = await response.json();
+
+    // Call the endpoint for each musicId
+    const trackPromises = data.map(async (song) => {
+      const trackResponse = await fetch(globalUrl + "/spotify/getTrack/" + song.musicId + '/' + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+      const trackData = await trackResponse.json();
+      return trackData;
+    });
+
+    const tracks = await Promise.all(trackPromises);
+    return tracks;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+
+
+async function addUserToPlaylist(playlistId, userEmail) {
+
+  var requestOptions = {
+    method: 'POST',
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(globalUrl + "/spotify/addUserToPlaylist/" + playlistId + "/" + userEmail , requestOptions);
+    const data = await response.status;
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw error;
+  }
+}
+
 module.exports = {
   getUser: getUser,
   getUserPlaylists: getUserPlaylists,
@@ -268,5 +329,8 @@ module.exports = {
   addLikedSong: addLikedSong,
   listLikedSongs: listLikedSongs,
   deleteLikedSong: deleteLikedSong,
-  isLikedSong: isLikedSong
+  isLikedSong: isLikedSong,
+  addSongToPlaylist,
+  getAllSongsFromPlaylist,
+  addUserToPlaylist
 }
