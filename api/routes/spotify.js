@@ -3,7 +3,6 @@ const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequeliz
 const { createPlaylist, getPlaylistById } = require('../Controllers/sequelize/playlists.controller');
 const { createPlaylistUser, getUsersPlaylists, getPlaylistUsers } = require('../Controllers/sequelize/playlist_user.controller');
 const router=express.Router()
-const express = require("express");
 const {
   getUser,
   getUserPlaylists,
@@ -14,8 +13,8 @@ const {
   deleteLikedSong,
   checkIfLikedSong,
   getUserAlbums,
+  getAlbum
 } = require("../Controllers/Spotify");
-const { getUserDb , getAllUsers, createUser } = require('../Controllers/sequelize/users.controller')
 
 
 router.get("/User/:token", async (req, res) => {
@@ -87,7 +86,7 @@ router.get("/UserAlbums/:token", async (req, res) => {
 });
 
 router.get("/UserAlbum/:id/:token", async (req, res) => {
-  getUserAlbum(req.params.token, req.params.id)
+  getAlbum(req.params.token, req.params.id)
     .then((data) => {
       if (data.error) {
         res.status(data.error.status).json({ message: data.error });

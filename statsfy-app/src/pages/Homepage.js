@@ -93,12 +93,12 @@ function Homepage(props) {
 
   useEffect(() => {
     async function UsersTopTracks() {
-      const data = await getUserTopTracks(
+      getUserTopTracks(
         window.localStorage.getItem("spotifyAuthToken"),
         1
-      );
-      console.log(data);
-      setTracks(data.items);
+      ).then((data)=>{
+        setTracks(data.items);
+      })
     }
     async function UserTopArtists() {
       const data = await getUserTopArtists(
@@ -220,7 +220,7 @@ function Homepage(props) {
 
   return (
     <>
-      {isLogged ? (
+      {isLogged && tracks? (
         <div className="content">
           <Row>
             {/* <Col lg="4">

@@ -159,22 +159,36 @@ async function addLikedSong(token, id) {
 async function getLikedSongs(token, offset) {
   var myHeaders = new fetch.Headers();
   myHeaders.append("Authorization", "Bearer " + token);
-
+  let defaultOffset = 0
   var requestOptions = {
     method: "GET",
     headers: myHeaders,
     redirect: "follow",
   };
-
-  return fetch(
-    `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`,
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => console.log("error", error));
+  if(offset !== "undefined"){
+    console.log(offset)
+    return fetch(
+      `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        return data;
+      })
+      .catch((error) => console.log("error", error));
+  }else{
+    return fetch(
+      `https://api.spotify.com/v1/me/tracks?offset=${0}&limit=50`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        return data;
+      })
+      .catch((error) => console.log("error", error));
+  }
 }
 
 async function deleteLikedSong(token, id) {

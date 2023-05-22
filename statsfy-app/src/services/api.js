@@ -84,7 +84,7 @@ async function getUserAlbum(id) {
   };
 
   try {
-    const response = await fetch(globalUrl + "/spotify/UserAlbums/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const response = await fetch(globalUrl + "/spotify/UserAlbum/" +  id + '/' + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -114,7 +114,7 @@ async function listLikedSongs(offset) {
   };
 
   try {
-    const response = await fetch(globalUrl + "/spotify/listLikedSongs/" +  offset + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const response = await fetch(globalUrl + "/spotify/listLikedSongs/" +  offset + '/'  + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -145,7 +145,7 @@ async function isLikedSong(id) {
   };
 
   try {
-    const response = await fetch(globalUrl + "/spotify/isLikedSong/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const response = await fetch(globalUrl + "/spotify/isLikedSong/" +  id + '/'   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {

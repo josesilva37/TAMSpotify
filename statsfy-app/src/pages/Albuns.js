@@ -35,29 +35,23 @@ function Albuns() {
     UsersAlbums();
   }, []);
 
+  useEffect(() => {
+    console.log(albumId,isOpen)
+  
+ 
+    
+  },)
+  
+  // const handleDetail = () => {
+
+  // }
+
   return (
     <>
-      {albums && (
-        <div className="albumWrapper">
-          {albums.map((a, i) => {
-            return (
-              <AlbunsCards
-                key={i}
-                image={a.album.images[1].url}
-                artist={a.album.artists[0].name}
-                name={a.album.name}
-                setOpen={setOpen}
-                setAlbumId={setAlbumId}
-                id={a.album.id}
-              ></AlbunsCards>
-            );
-          })}
-        </div>
-      )}
       <div className="content">
         {isLogged ? (
           <>
-            {isOpen === false ? (
+            {!isOpen ? (
               <>
                 {albums && (
                   <div className="albumWrapper">
@@ -85,7 +79,6 @@ function Albuns() {
           </>
         ) : (
           <CardHeader style={{ textAlign: "center" }}>
-            {" "}
             Inicie Sessão para ver as Estatísticas
           </CardHeader>
         )}
