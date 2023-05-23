@@ -96,11 +96,11 @@ export default function AlbumDetail(props) {
           <Table className="tablesorter" responsive>
             <thead className="text-primary">
               <tr>
-                <th style={{color:'black'}}>#</th>
-                <th style={{color:'black'}}> Title</th>
-                <th style={{color:'black'}}>Artists</th>
-                <th style={{color:'black', textAlign:'center'}}><i className="tim-icons icon-watch-time" />Length</th>
-                <th style={{color:'black'}}></th>
+                <th >#</th>
+                <th>Title</th>
+                <th>Artists</th>
+                <th><i className="tim-icons icon-watch-time" />Length</th>
+                <th ></th>
               </tr>
             </thead>
             <tbody>
