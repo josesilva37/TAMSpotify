@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { getLikedSongs } from "SpotifyAPI/Endpoints";
-// import {
-//     CardHeader,
-//     Table,
-//   } from "reactstrap";
-// import TrackTable from "components/TrackTable/TrackTable";
-// import { deleteLikedSong } from "SpotifyAPI/Endpoints";
-// import moment from "moment";
+import { isLikedSong, listLikedSongs } from "../services/api";
+import {
+    Table,
+  } from "reactstrap";
+import TrackTable from "../components/TrackTable/TrackTable";
+import { deleteLikedSong } from "../services/api";
+import moment from "moment";
 
 
 function LikedSongs() {
@@ -16,51 +15,48 @@ function LikedSongs() {
 
   /////////////// USER TOKEN ////////////
 
-//   useEffect(() => {
-//     const token = window.localStorage.getItem('spotifyAuthToken');
-//     if (token.length === 9) {
-//       setIsLogged(false)
-//     } else {
-//       setIsLogged(true)
-//     } userToken.current = token;
-//   }, [])
+  useEffect(() => {
+    const token = window.localStorage.getItem('spotifyAuthToken');
+    if (token.length === 9) {
+      setIsLogged(false)
+    } else {
+      setIsLogged(true)
+    } userToken.current = token;
+  }, [])
 
 
-//   useEffect(() => {
-//     async function UsersLikedSongs() {
-//       const data = await getLikedSongs(userToken.current, 0);
-//       setLiked(data.items);
-//     }
+  useEffect(() => {
+    async function UsersLikedSongs() {
+      const data = await listLikedSongs(0);
+      setLiked(data.items);
+    }
 
-//     if (userToken.current !== 'undefined') {
-//       UsersLikedSongs();
-//     }
+    if (userToken.current !== 'undefined') {
+      UsersLikedSongs();
+    }
 
-//   }, [userToken]);
-
-
-//   function millisToMinutesAndSeconds(millis) {
-//     var minutes = Math.floor(millis / 60000);
-//     var seconds = ((millis % 60000) / 1000).toFixed(0);
-//     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-//   }
+  }, [userToken]);
 
 
-//   async function removeTrack(id){
-//     const data = await deleteLikedSong(userToken.current, id);
+  function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
 
-//     const data2 = await getLikedSongs(userToken.current, 0);
+
+  async function removeTrack(id){
+    const data = await deleteLikedSong( id);
+
+    const data2 = await listLikedSongs(0);
     
-//     setLiked(data2.items);
-//   }
+    setLiked(data2.items);
+  }
 
   return (
     <>
-    <p>
-        LikedSongs
-    </p>
-      {/* <div className="content">
-        {isLogged ?
+      <div className="content">
+        {isLogged  && likedSongs?
           <>
             <h1>Your liked songs</h1>
             <Table className="tablesorter" responsive>
@@ -82,7 +78,7 @@ function LikedSongs() {
                             <td>{l.track.album.name}</td>
                             <td className="text-center">{millisToMinutesAndSeconds(l.track.duration_ms)}</td>
                             <td>{moment(l.added_at).format("DD/MM/YY")}</td>
-                            <td><img src={require("assets/img/icons8-loading-heart-24.png")} className="coracao"  onClick={() => removeTrack(l.track.id)}></img></td>
+                            <td><img src={require("../assets/img/icons8-loading-heart-24.png")} className="coracao"  onClick={() => removeTrack(l.track.id)}></img></td>
                           </tr>
                         )
                     })}
@@ -90,9 +86,9 @@ function LikedSongs() {
                 </Table>
           </>
           :
-          <CardHeader style={{ textAlign: "center" }}> Inicie Sessão para ver as Estatísticas</CardHeader>
+          <div style={{ textAlign: "center" }}> Inicie Sessão para ver as Estatísticas</div>
         }
-      </div> */}
+      </div>
     </>
   );
 }

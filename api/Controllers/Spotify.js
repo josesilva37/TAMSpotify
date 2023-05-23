@@ -184,7 +184,6 @@ async function getLikedSongs(token, offset) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         return data;
       })
       .catch((error) => console.log("error", error));
@@ -204,6 +203,7 @@ async function deleteLikedSong(token, id) {
   return fetch(`https://api.spotify.com/v1/me/tracks?ids=${id}`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
       return data;
     })
     .catch((error) => console.log("error", error));

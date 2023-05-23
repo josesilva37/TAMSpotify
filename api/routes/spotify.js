@@ -128,6 +128,7 @@ router.get("/listLikedSongs/:offset/:token", async (req, res) => {
 });
 
 router.delete("/deleteLikedSong/:id/:token", async (req, res) => {
+  console.log(req.params.token, req.params.id)
   deleteLikedSong(req.params.token, req.params.id)
     .then((data) => {
       if (data.error) {
