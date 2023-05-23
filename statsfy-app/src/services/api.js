@@ -124,12 +124,12 @@ async function listLikedSongs(offset) {
 }
 async function deleteLikedSong(id) {
   var requestOptions = {
-    method: 'DELETE',
+    method: 'GET',
     redirect: 'follow'
   };
 
   try {
-    const response = await fetch(globalUrl + "/spotify/deleteLikedSong/" +  id + '/'  +   + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
+    const response = await fetch(globalUrl + "/spotify/deleteLikedSong/" +  id + '/' + window.localStorage.getItem('spotifyAuthToken'), requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {
