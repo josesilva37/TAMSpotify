@@ -17,6 +17,22 @@ function createPlaylistUser(playlistId, userEmail) {
     });
 }
 
+function addUserToPlaylist(playlistId, userEmail) {
+    return new Promise((resolve, reject) => {
+        playlist_user
+        .create({
+            playlistId: playlistId,
+            userEmail: userEmail
+        })
+        .then((user) => {
+            resolve(user);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
 function getUsersPlaylists(userEmail) {
     return new Promise((resolve, reject) => {
         playlist_user
@@ -55,5 +71,6 @@ function getPlaylistUsers(playlistId) {
 module.exports = {
     createPlaylistUser,
     getUsersPlaylists,
-    getPlaylistUsers
+    getPlaylistUsers,
+    addUserToPlaylist
 }
