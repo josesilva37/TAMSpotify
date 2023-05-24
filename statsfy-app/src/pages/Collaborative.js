@@ -75,15 +75,14 @@ function Collaborative(props) {
 
   const handleAdd = () => {
     setHidden(true);
-    addUserToPlaylist(playlistID, props.user.email)
-      .then((resp) => {
-        if(resp == 200){
-          getUsersPlaylistDb(props.user.email).then((res) => {
-            setUsersPlaylists(res);
-            setPlaylistID("");
-          });
-        }
-      })
+    createPlaylistUser(playlistID, props.user.email).then((r) => {
+      if(r == 200){
+        getUsersPlaylistDb(props.user.email).then((res) => {
+          setUsersPlaylists(res);
+          setPlaylistName("");
+        });
+      }
+    });
   };
 
   const handleNameChange = (event) => {
