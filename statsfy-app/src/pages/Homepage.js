@@ -71,7 +71,6 @@ function Homepage(props) {
           color: randomColor(),
         });
       });
-      console.log(data);
       return data;
     }
 
@@ -93,12 +92,11 @@ function Homepage(props) {
 
   useEffect(() => {
     async function UsersTopTracks() {
-      getUserTopTracks(
-        window.localStorage.getItem("spotifyAuthToken"),
-        1
-      ).then((data)=>{
-        setTracks(data.items);
-      })
+      getUserTopTracks(window.localStorage.getItem("spotifyAuthToken"), 1).then(
+        (data) => {
+          setTracks(data.items);
+        }
+      );
     }
     async function UserTopArtists() {
       const data = await getUserTopArtists(
@@ -182,29 +180,25 @@ function Homepage(props) {
   };
 
   async function HandleArtists(value) {
-    const data = await getUserTopArtists(
-      window.localStorage.getItem("spotifyAuthToken"),
-      value.target.value
-    );
-    if (data !== null && data !== undefined) {
-      var arrN = [];
-      var arrP = [];
-      data.items.map((p, i, array) => {
-        arrN.push(p.name);
-        arrP.push(p.popularity);
-      });
-      setLabels(arrN);
-      setPop(arrP);
-    }
-    setArtists(data);
+    getUserTopArtists(value.target.value).then((data) => {
+      if (data !== null && data !== undefined) {
+        var arrN = [];
+        var arrP = [];
+        data.items.map((p, i, array) => {
+          arrN.push(p.name);
+          arrP.push(p.popularity);
+        });
+        setLabels(arrN);
+        setPop(arrP);
+      }
+      setArtists(data);
+    });
   }
   function HandleTracks(value) {
     async function UsersTopTracks() {
-      const data = await getUserTopTracks(
-        userToken.current,
-        value.target.value
-      );
-      setTracks(data.items);
+      getUserTopTracks(value.target.value).then((data) => {
+        setTracks(data.items);
+      });
     }
 
     if (userToken.current !== "undefined") {
@@ -220,7 +214,7 @@ function Homepage(props) {
 
   return (
     <>
-      {isLogged && tracks? (
+      {isLogged && tracks ? (
         <div className="content">
           <Row>
             {/* <Col lg="4">
