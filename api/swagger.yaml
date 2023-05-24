@@ -938,3 +938,501 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+
+  /getTrack/{id}/{token}:
+    get:
+      tags:
+        - Spotify tracks
+      summary: Get all information of a song
+      description: Get all information of a song
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the song
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          description: The user's access token
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  album:
+                    type: object
+                    properties:
+                      album_type:
+                        type: string
+                      total_tracks:
+                        type: integer
+                      available_markets:
+                        type: array
+                        items:
+                          type: string
+                      external_urls:
+                        type: object
+                        properties:
+                          spotify:
+                            type: string
+                      href:
+                        type: string
+                      id:
+                        type: string
+                      images:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                            height:
+                              type: integer
+                            width:
+                              type: integer
+                      name:
+                        type: string
+                      release_date:
+                        type: string
+                      release_date_precision:
+                        type: string
+                      restrictions:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                      type:
+                        type: string
+                      uri:
+                        type: string
+                      copyrights:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            text:
+                              type: string
+                            type:
+                              type: string
+                      external_ids:
+                        type: object
+                        properties:
+                          isrc:
+                            type: string
+                          ean:
+                            type: string
+                          upc:
+                            type: string
+                      genres:
+                        type: array
+                        items:
+                          type: string
+                      label:
+                        type: string
+                      popularity:
+                        type: integer
+                      album_group:
+                        type: string
+                      artists:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            external_urls:
+                              type: object
+                              properties:
+                                spotify:
+                                  type: string
+                            href:
+                              type: string
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            type:
+                              type: string
+                            uri:
+                              type: string
+                  artists:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        external_urls:
+                          type: object
+                          properties:
+                            spotify:
+                              type: string
+                        followers:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                            total:
+                              type: integer
+                        genres:
+                          type: array
+                          items:
+                            type: string
+                        href:
+                          type: string
+                        id:
+                          type: string
+                        images:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              url:
+                                type: string
+                              height:
+                                type: integer
+                              width:
+                                type: integer
+                        name:
+                          type: string
+                        popularity:
+                          type: integer
+                        type:
+                          type: string
+                        uri:
+                          type: string
+                  available_markets:
+                    type: array
+                    items:
+                      type: string
+                  disc_number:
+                    type: integer
+                  duration_ms:
+                    type: integer
+                  explicit:
+                    type: boolean
+                  external_ids:
+                    type: object
+                    properties:
+                      isrc:
+                        type: string
+                      ean:
+                        type: string
+                      upc:
+                        type: string
+                  external_urls:
+                    type: object
+                    properties:
+                      spotify:
+                        type: string
+                  href:
+                    type: string
+                  id:
+                    type: string
+                  is_playable:
+                    type: boolean
+                  linked_from:
+                    type: object
+                  restrictions:
+                    type: object
+                    properties:
+                      reason:
+                        type: string
+                  name:
+                    type: string
+                  popularity:
+                    type: integer
+                  preview_url:
+                    type: string
+                  track_number:
+                    type: integer
+                  type:
+                    type: string
+                  uri:
+                    type: string
+                  is_local:
+                    type: boolean
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+
+  /getUserDb/{email}:
+    get:
+      tags:
+        - Local DB
+      summary: Get user information
+      description: Get user information
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The user email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  name:
+                    type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /userExist/{email}:
+    get:
+      tags:
+        - Local DB
+      summary: Check if the user already exists in our database
+      description: Check if the user already exists in our database
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The user email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /createUserDb/{email}/{name}:
+    post:
+      tags:
+        - Local DB
+      summary: Create new user in database
+      description: Create new user in database
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The user email
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          description: User name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /createPlaylist/{name}:
+    post:
+      tags:
+        - Local DB
+      summary: Create new playlist in database
+      description: Create new playlist in database
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Playlist name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Playlist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /createPlaylistUser/{playlistId}/{userEmail}:
+    post:
+      tags:
+        - Local DB
+      summary: Create a relation between a playlist and a user
+      description: Create a relation between user and a playlist every time a new playlist is created
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          description: Playlist id
+          schema:
+            type: string
+        - name: userEmail
+          in: path
+          required: true
+          description: User email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /addUserToPlaylist/{playlistId}/{userEmail}:
+    post:
+      tags:
+        - Local DB
+      summary: Add user to a playlist
+      description: Add user to a playlist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          description: Playlist id
+          schema:
+            type: string
+        - name: userEmail
+          in: path
+          required: true
+          description: User email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /getUsersPlaylits/{email}:
+    get:
+      tags:
+        - Local DB
+      summary: Get all user playlists
+      description: Get all user playlists
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: User email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /getPlaylistUsers/{playlistId}:
+    get:
+      tags:
+        - Local DB
+      summary: Get all user in a playlist
+      description: Get all user in a playlists
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          description: Playlist id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /addSongToPlaylist/{playlistId}/{musicId}:
+    post:
+      tags:
+        - Local DB
+      summary: Add a song to a playlist
+      description: Add a song to a playlist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          description: Playlist id
+          schema:
+            type: string
+        - name: musicId
+          in: path
+          required: true
+          description: Music id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /getAllSongsFromPlaylist/{playlistId}:
+    get:
+      tags:
+        - Local DB
+      summary: Get all songs from a playlist
+      description: Get all songs from a playlist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          description: Playlist id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    playlistId:
+                      type: string
+                    musicId:
+                      type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error

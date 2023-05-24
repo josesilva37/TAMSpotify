@@ -190,7 +190,7 @@ router.get("/getUserDb/:email", (req, res) => {
   const email = req.params.email;
 
   if (email) {
-    getUserDb(req, res, email)
+    getUserDb(email)
       .then((user) => {
         res.json(user);
       })
@@ -206,7 +206,7 @@ router.get("/userExist/:email", (req, res) => {
   const email = req.params.email;
 
   if (email) {
-    getUserDb(req, res, email)
+    getUserDb(email)
       .then((user) => {
         if (user == null) {
           res.send(false);
@@ -227,7 +227,7 @@ router.post("/createUserDb/:email/:name", (req, res) => {
   const nome = req.params.name;
 
   if (email && nome) {
-    createUser(req, res, email, nome)
+    createUser(email, nome)
       .then((user) => {
         res.sendStatus(200);
       })

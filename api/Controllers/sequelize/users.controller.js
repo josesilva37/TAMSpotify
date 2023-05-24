@@ -15,7 +15,7 @@ function getAllUsers(req, res) {
   });
 }
 
-function userExist(req, res, email) {
+function userExist(email) {
   return new Promise((resolve, reject) => {
     users
       .findOne({
@@ -32,7 +32,7 @@ function userExist(req, res, email) {
   });
 }
 
-function getUserDb(req, res, email) {
+function getUserDb(email) {
   return new Promise((resolve, reject) => {
     users
       .findOne({
@@ -49,7 +49,7 @@ function getUserDb(req, res, email) {
   });
 }
 
-function createUser(req, res, email, nome) {
+function createUser(email, nome) {
   return new Promise((resolve, reject) => {
     users
       .create({
