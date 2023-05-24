@@ -12,7 +12,7 @@ import {
 
 function Profile(props) {
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "80%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "80%"}}>
       <Col md="8">
         <Card>
           <CardHeader>
@@ -32,25 +32,23 @@ function Profile(props) {
                           className="photo"
                           src={props.user.images[0].url}
                         />
-                        <h5 className="title2">{props.user.display_name}</h5>
+                        <h5 className="title2" style={{color:'black'}}>{props.user.display_name}</h5>
                       </a>
-                      <p className="description">{props.user.email}</p>
+                      <p className="description" style={{color:'black'}}>{props.user.email}</p>
                     </div>
                   </CardBody>
                   <CardBody>
                     <div className="author">
-                      <p className="description">
-                        {" "}
-                        <span style={{ fontWeight: "bold" }}>
-                          {" "}
+                      <p className="description" style={{color:'black'}}>
+                        <span style={{ fontWeight: "bold", color:'black' }}>
                           User Type:
-                        </span>{" "}
+                        </span>
                         {props.user.product.charAt(0).toUpperCase()}
                         {props.user.product.slice(1)}
                       </p>
                       <br></br>
-                      <p className="description">
-                        <span style={{ fontWeight: "bold" }}>Followers:</span>{" "}
+                      <p className="description" style={{color:'black'}}>
+                        <span style={{ fontWeight: "bold" ,color:'black'}}>Followers:</span>
                         {props.user.followers.total}
                       </p>
                     </div>
