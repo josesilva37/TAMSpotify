@@ -125,10 +125,10 @@ function Collaborative(props) {
   return (
     <div className="collaborativeWrapper">
       {successAlert && (
-        <Alert color="success">This is a success alert — check it out!</Alert>
+        <UncontrolledAlert color="success" fade={true}>Success</UncontrolledAlert>
       )}
       {errorAlert && (
-        <Alert color="danger">This is an error alert — check it out!</Alert>
+        <UncontrolledAlert color="danger" fade={true}>Error</UncontrolledAlert>
       )}
       {!playlistDetails ? (
         <>
@@ -190,7 +190,7 @@ function Collaborative(props) {
       ) : (
         <div>
           <p>Name: {playlistDetailName}</p>
-          <div>
+          <div style={{display: "flex", alignItems: "center", gap: '15px'}}>
             <p>Users: </p>
             {playlistUsers &&
               playlistUsers.map((user) => {
